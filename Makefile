@@ -5,7 +5,6 @@ IVORYFLAGS ?= --const-fold --verbose
 TESTS      := \
 	cansendrecv-test \
 	can2uart-test \
-	led-test \
 	blink-test
 
 AADL_TESTS := 
