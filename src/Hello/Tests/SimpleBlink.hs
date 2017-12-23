@@ -1,6 +1,4 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleContexts #-}
 
 module Hello.Tests.SimpleBlink where
 
@@ -9,8 +7,6 @@ import Ivory.Tower
 import Ivory.HW.Module
 
 import Ivory.BSP.STM32.Peripheral.GPIOF4
-
-import Hello.Tests.Platforms
 
 -- This artificial Tower program toggles LED when
 -- message arrives on its channel
