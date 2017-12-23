@@ -5,6 +5,8 @@ IVORYFLAGS ?= --const-fold --verbose
 TESTS      := \
 	cansendrecv-test \
 	can2uart-test \
+	uart-test \
+	simpleblink-test \
 	blink-test
 
 AADL_TESTS := 

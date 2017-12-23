@@ -95,12 +95,14 @@ data TestDMA =
 
 data TestPlatform =
   TestPlatform
-    { testplatform_leds  :: ColoredLEDs
-    , testplatform_uart  :: TestUART
-    , testplatform_i2c   :: TestI2C
-    , testplatform_can1  :: TestCAN
-    , testplatform_rng   :: RNG
-    , testplatform_stm32 :: STM32Config
+    { testplatform_leds   :: ColoredLEDs
+    , testplatform_uart   :: TestUART
+    , testplatform_i2c    :: TestI2C
+    , testplatform_can1   :: TestCAN
+    , testplatform_rng    :: RNG
+    , testplatform_stm32  :: STM32Config
+    -- Used by SimpleBlink
+    , testplatform_ledpin :: GPIOPin
     }
 
 testplatform_clockconfig :: TestPlatform -> ClockConfig
@@ -137,4 +139,7 @@ hello4disco = TestPlatform
       }
   , testplatform_rng = F405.rng
   , testplatform_stm32 = stm32f405Defaults 8
+
+  -- SimpleBlink uses this for simplicity
+  , testplatform_ledpin = F405.pinD14
   }
