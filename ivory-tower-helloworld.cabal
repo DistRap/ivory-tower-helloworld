@@ -14,11 +14,11 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Hello.Tests.Platforms
-                       Hello.Tests.LED
                        Hello.Tests.Blink
                        Hello.Tests.SimpleBlink
                        Hello.Tests.CANSendRecv
                        Hello.Tests.CAN2UART
+                       Hello.Tests.UART
                        --Hello.App
                        --Hello.Platforms
 
@@ -31,6 +31,7 @@ library
                        tower-config,
                        tower-hal,
                        tower-freertos-stm32 >= 0.9,
+                       ivory-tower-base,
                        ivory-bsp-stm32,
                        ivory-bsp-tests
 
@@ -100,3 +101,19 @@ executable can2uart-test-gen
                        ivory-bsp-tests,
                        ivory-tower-helloworld
   ghc-options:          -Wall
+
+executable uart-test-gen
+  main-is:             UARTTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory,
+                       ivory-stdlib,
+                       ivory-backend-c,
+                       ivory-hw,
+                       tower          >= 0.9,
+                       tower-config,
+                       tower-freertos-stm32,
+                       ivory-bsp-stm32,
+                       ivory-bsp-tests,
+                       ivory-tower-helloworld
+ ghc-options:          -Wall

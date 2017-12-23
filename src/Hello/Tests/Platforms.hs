@@ -39,7 +39,7 @@ import Ivory.BSP.STM32.Peripheral.UART.DMA
 import Ivory.BSP.STM32.ClockConfig
 import Ivory.BSP.STM32.Config
 
-import Hello.Tests.LED
+import Ivory.Tower.Base
 
 testPlatformParser :: ConfigParser TestPlatform
 testPlatformParser = do

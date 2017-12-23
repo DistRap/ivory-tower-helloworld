@@ -20,42 +20,9 @@ import Ivory.BSP.STM32.Driver.UART
 import Ivory.BSP.STM32.Peripheral.CAN.Filter
 
 import Hello.Tests.Platforms
-import Hello.Tests.LED
-import BSP.Tests.UART.Buffer
-import BSP.Tests.UART.Types
-
-puts :: (GetAlloc eff ~ 'Scope cs)
-     => Emitter ('Stored Uint8) -> String -> Ivory eff ()
-puts e str = mapM_ (\c -> putc e (fromIntegral (ord c))) str
-
-putc :: (GetAlloc eff ~ 'Scope cs)
-     => Emitter ('Stored Uint8) -> Uint8 -> Ivory eff ()
-putc = emitV
-
-canSend' :: AbortableTransmit ('Struct "can_message") ('Stored IBool)
-         -> ChanOutput  ('Struct "can_message") -- ('Array 8 ('Stored Uint8)))
-         -> Tower p ()
-canSend' req msg = do
-    monitor "canSender" $ do
-      tx_pending <- state "tx_pending"
-      last_sent  <- state "last_sent"
-      handler msg "can_msg" $ do
-        abort_emitter <- emitter (abortableAbort    req) 1
-        req_emitter   <- emitter (abortableTransmit req) 1
-        callback $ \msg  -> do
-          refCopy last_sent msg
-
-          was_pending <- deref tx_pending
-          ifte_ was_pending (emitV abort_emitter true) $ do
-            emit req_emitter $ constRef last_sent
-            store tx_pending true
-
-      handler (abortableComplete req) "tx_complete" $ do
-        req_emitter <- emitter (abortableTransmit req) 1
-        callbackV $ \ ok -> do
-          ifte_ ok (store tx_pending false) $ do
-            emit req_emitter $ constRef last_sent
-            store tx_pending true
+import Ivory.Tower.Base
+import Ivory.Tower.Base.UART
+import Ivory.Tower.Base.UART.Types
 
 app :: (e -> ClockConfig)
     -> (e -> TestCAN)
@@ -63,8 +30,7 @@ app :: (e -> ClockConfig)
     -> (e -> ColoredLEDs)
     -> Tower e ()
 app tocc totestcan touart toleds = do
-  towerDepends uartTestTypes
-  towerModule  uartTestTypes
+  uartTowerDeps
 
   can  <- fmap totestcan getEnv
   leds <- fmap toleds getEnv
@@ -72,19 +38,13 @@ app tocc totestcan touart toleds = do
 
   (canctl_input, canctl_output) <- channel
 
-  (buffered_ostream, istream, mon) <- uartTower tocc (testUARTPeriph uart) (testUARTPins uart) 115200
+  (ostream, istream) <- bufferedUartTower tocc (testUARTPeriph uart) (testUARTPins uart) 115200 (Proxy :: Proxy UARTBuffer)
 
-  monitor "dma" mon
-  -- UART buffer transmits in buffers. We want to transmit byte-by-byte and let
-  -- this monitor manage periodically flushing a buffer.
-  ostream <- uartUnbuffer (buffered_ostream :: BackpressureTransmit UARTBuffer ('Stored IBool))
   echoPrompt "hello world" ostream istream canctl_input
 
   (res, req, _, _) <- canTower tocc (testCAN can) 1000000 (testCANRX can) (testCANTX can)
 
-  -- periodic <- period (Milliseconds 250)
-
-  canSend' req canctl_output
+  canSendTower req canctl_output
 
   monitor "simplecontroller" $ do
     handler systemInit "init" $ do
@@ -101,16 +61,16 @@ app tocc totestcan touart toleds = do
     handler res "result" $ do
       o <- emitter ostream 64
       callback $ \msg -> do
-        --(ledOn  $ blueLED leds)
         count <- deref received
         store received (count + 1)
+
         puts o "\n\rrcv\n\r"
-        -- l <- deref (msg ~> can_message_len)
+
         arrayMap $ \ix -> do
-            --when (fromIx ix <? 8) $ do
               val <- deref ((msg ~> can_message_buf) ! ix)
               putc o (48 + (castWith 0 $ fromIx $ ix))
               putc o val
+
         puts o "\n\r/rcv\n\r"
 
         ifte_ (count .& 1 ==? 1)
@@ -156,30 +116,16 @@ echoPrompt greeting ostream istream canctl = do
         push input
         let testChar = (input `isChar`)
         pos <- deref (incoming ~> stringLengthL)
-        --a <- local $ iarray [0..7]
         when (pos ==? 8) $ do
-          --arrayMap $ \ix -> do
-          --  when (fromIx ix <? 8) $ do
-          --    val <- deref ((incoming ~> stringDataL) ! ix)
-          --    putc o val
-
           let msgid = standardCANID (fromRep 0x7FF) (boolToBit false)
           r <- local $ istruct
             [ can_message_id  .= ival msgid
---            , can_message_buf .= deref buf
---                iarray [ ival $ bitCast $ time `iShiftR` fromInteger (8 * i) | i <- [7,6..0] ]
             , can_message_len .= ival 8
             ]
+
           -- arrayCopy: to from offset len
           arrayCopy (r ~> can_message_buf) (constRef (incoming ~> stringDataL)) 0 8
           emit c (constRef r)
           store (incoming ~> stringLengthL) 0
 
   where prompt = "tower> "
-
-isChar :: Uint8 -> Char -> IBool
-isChar b c = b ==? (fromIntegral $ ord c)
-
-uartTestTypes :: Module
-uartTestTypes = package "uartTestTypes" $ do
-  defStringType (Proxy :: Proxy UARTBuffer)

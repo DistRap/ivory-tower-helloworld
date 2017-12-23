@@ -15,7 +15,7 @@ import Ivory.BSP.STM32.Driver.CAN
 import Ivory.BSP.STM32.Peripheral.CAN.Filter
 
 import Hello.Tests.Platforms
-import Hello.Tests.LED
+import Ivory.Tower.Base
 
 app :: (e -> ClockConfig)
     -> (e -> TestCAN)

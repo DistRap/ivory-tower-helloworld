@@ -8,8 +8,9 @@ import Ivory.Language
 import Ivory.Tower
 import Ivory.HW.Module
 
-import Hello.Tests.LED
 import Hello.Tests.Platforms
+
+import Ivory.Tower.Base.LED hiding (blink, blinker, ledController)
 ------------------------------
 
 -- | LED Controller: Given a set of leds and a control channel of booleans,
