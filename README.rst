@@ -29,11 +29,15 @@ Tests
 
 Blink
   Blinks red and blue LEDs on GPIOD14 and GPIOD15
+SimpleBlink
+  Simplified blink application toggling red LED
 CANSendRecv
   Test application sending packets from CAN1, blinks on received packets.
 CAN2UART
   Test application for receiving and sending
   CAN packets controlled by UART
+UART
+  Simple UART console, allows toggling LED with '0' '1' characters
 
 
 Run `make` to build all test applications.
