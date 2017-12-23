@@ -13,16 +13,11 @@ import Ivory.Stdlib
 import Ivory.Tower
 
 import Ivory.BSP.STM32.ClockConfig
-import Ivory.BSP.STM32.Driver.CAN
-import Ivory.BSP.STM32.Driver.UART
-import Ivory.BSP.STM32.Peripheral.CAN.Filter
 
 import Hello.Tests.Platforms
 
-import Ivory.Tower.Base
+import Ivory.Tower.Base hiding (putc, puts)
 import Ivory.Tower.Base.UART.Types
-import Ivory.Tower.Base.Util
-
 
 app :: (e -> ClockConfig)
     -> (e -> ColoredLEDs)

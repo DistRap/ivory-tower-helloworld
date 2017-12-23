@@ -25,7 +25,7 @@ import qualified Ivory.BSP.STM32F405.CAN         as F405
 import qualified Ivory.BSP.STM32F405.UART        as F405
 import qualified Ivory.BSP.STM32F405.GPIO        as F405
 import qualified Ivory.BSP.STM32F405.GPIO.AF     as F405
-import qualified Ivory.BSP.STM32F405.SPI         as F405
+--import qualified Ivory.BSP.STM32F405.SPI         as F405
 import qualified Ivory.BSP.STM32F405.I2C         as F405
 import qualified Ivory.BSP.STM32F405.RNG         as F405
 

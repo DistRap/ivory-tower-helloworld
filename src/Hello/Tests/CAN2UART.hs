@@ -6,22 +6,17 @@
 
 module Hello.Tests.CAN2UART where
 
-import Data.Char (ord)
-
 import Ivory.Language
 import Ivory.Stdlib
 import Ivory.Tower
 import Ivory.Tower.HAL.Bus.CAN
-import Ivory.Tower.HAL.Bus.Interface
 
 import Ivory.BSP.STM32.ClockConfig
 import Ivory.BSP.STM32.Driver.CAN
-import Ivory.BSP.STM32.Driver.UART
 import Ivory.BSP.STM32.Peripheral.CAN.Filter
 
 import Hello.Tests.Platforms
 import Ivory.Tower.Base
-import Ivory.Tower.Base.UART
 import Ivory.Tower.Base.UART.Types
 
 app :: (e -> ClockConfig)
@@ -114,7 +109,6 @@ echoPrompt greeting ostream istream canctl = do
       callbackV $ \input -> do
         putc o input -- echo to terminal
         push input
-        let testChar = (input `isChar`)
         pos <- deref (incoming ~> stringLengthL)
         when (pos ==? 8) $ do
           let msgid = standardCANID (fromRep 0x7FF) (boolToBit false)
