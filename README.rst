@@ -37,7 +37,7 @@ CAN2UART
   Test application for receiving and sending
   CAN packets controlled by UART
 UART
-  Simple UART console, allows toggling LED with '0' '1' characters
+  Simple UART console, allows toggling LED with '1' '2' characters
 
 
 Run `make` to build all test applications.
