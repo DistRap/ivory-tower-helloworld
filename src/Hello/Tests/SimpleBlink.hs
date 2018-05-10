@@ -53,7 +53,7 @@ app toledpin = do
 
   -- creates a period that fires every 500ms
   -- `per` is a ChanOutput, specifically ChanOutput ('Stored ITime)
-  per <- period (Milliseconds 500)
+  per <- period (Milliseconds 20)
 
   -- create our ledToggle tower
   togIn <- ledToggle ledpin

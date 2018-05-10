@@ -6,14 +6,19 @@ else
        STACK=stack
 endif
 
-TARGET ?= /dev/ttyACM0
+TARGET ?= /dev/cu.usbmodem7EBA7BA1
+#TARGET ?= /dev/cu.usbmodemE4B99EE1
+#TARGET ?= /dev/cu.usbmodemE4C679B1
+#TARGET ?= /dev/cu.usbmodem7EBA7BA1
 IVORYFLAGS ?= --const-fold --verbose
 TESTS      := \
-	cansendrecv-test \
-	can2uart-test \
-	uart-test \
-	simpleblink-test \
-	blink-test
+blink-test \
+uart-test \
+max7219-test
+#sht21-test
+#	cansendrecv-test \
+#	can2uart-test \
+#	simpleblink-test \
 
 AADL_TESTS := 
 CLEANS     := $(foreach test,$(TESTS),$(test)-clean) \

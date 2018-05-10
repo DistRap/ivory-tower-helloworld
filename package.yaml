@@ -1,0 +1,72 @@
+name: ivory-tower-helloworld
+version: '0.1.0.0'
+synopsis: helloworld application
+author: Your name here
+maintainer: example@example.org
+copyright: 2017 Your name here
+license: BSD3
+dependencies:
+- base >=4.6
+- ivory
+- ivory-stdlib
+- ivory-hw
+- tower >=0.9
+- tower-config
+- ivory-bsp-stm32
+- ivory-bsp-tests
+- ivory-tower-drivers
+library:
+  source-dirs: src
+  ghc-options: -Wall
+  other-modules: []
+  exposed-modules:
+  - Hello.Tests.Platforms
+  - Hello.Tests.Blink
+  - Hello.Tests.SimpleBlink
+  - Hello.Tests.CANSendRecv
+  - Hello.Tests.CAN2UART
+  - Hello.Tests.UART
+  - Hello.Tests.MAX7219
+  dependencies:
+  - monadLib
+  - tower-hal
+  - tower-freertos-stm32 >=0.9
+  - ivory-tower-base
+  - ivory-serialize
+executables:
+  #  blink-test-gen:
+  #    main: BlinkTest.hs
+  #    source-dirs: test
+  #    ghc-options: -Wall
+  #    other-modules: []
+  #    dependencies:
+  #    - ivory-backend-c
+  #    - tower-freertos-stm32
+  #    - ivory-tower-helloworld
+  #  simpleblink-test-gen:
+  #    main: SimpleBlinkTest.hs
+  #    source-dirs: test
+  #    ghc-options: -Wall
+  #    other-modules: []
+  #    dependencies:
+  #    - ivory-backend-c
+  #    - tower-freertos-stm32
+  #    - ivory-tower-helloworld
+  #  uart-test-gen:
+  #    main: UARTTest.hs
+  #    source-dirs: test
+  #    ghc-options: -Wall
+  #    other-modules: []
+  #    dependencies:
+  #    - ivory-backend-c
+  #    - tower-freertos-stm32
+  #    - ivory-tower-helloworld
+  max7219-test-gen:
+    main: MAX7219Test.hs
+    source-dirs: test
+    ghc-options: -Wall
+    other-modules: []
+    dependencies:
+    - ivory-backend-c
+    - tower-freertos-stm32
+    - ivory-tower-helloworld

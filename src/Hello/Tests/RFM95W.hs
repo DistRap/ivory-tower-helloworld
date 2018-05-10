@@ -19,15 +19,19 @@ import Hello.Tests.Platforms
 import Ivory.Tower.Base hiding (putc, puts)
 import Ivory.Tower.Base.UART.Types
 
+import Ivory.Tower.Drivers.Net.RFM95
+
 app :: (e -> ClockConfig)
     -> (e -> ColoredLEDs)
     -> (e -> TestUART)
+    -> (e -> TestSPI)
     -> Tower e ()
-app tocc toleds touart = do
+app tocc toleds touart testspi = do
   uartTowerDeps
 
   leds <- fmap toleds getEnv
   uart <- fmap touart getEnv
+  spi  <- fmap tospi getEnv
 
   (ostream, istream) <- bufferedUartTower tocc (testUARTPeriph uart) (testUARTPins uart) 115200 (Proxy :: Proxy UARTBuffer)
 
@@ -43,7 +47,7 @@ echoPrompt :: String
            -> Tower p ()
 echoPrompt greeting ostream istream ledctl = do
   p <- period (Milliseconds 1)
-  per <- period (Milliseconds 100)
+  per <- period (Milliseconds 1000)
 
   let puts :: (GetAlloc eff ~ 'Scope cs)
            => Emitter ('Stored Uint8) -> String -> Ivory eff ()
@@ -64,22 +68,33 @@ echoPrompt greeting ostream istream ledctl = do
           puts o (greeting ++ "\n")
           puts o prompt
 
---    handler per "blinkPeriod" $ do
---      o <- emitter ostream 32
---      l <- emitter ledctl 1
---
---      callbackV $ const $ do
---        puts o "a"
-
-    handler istream "istream" $ do
-      l <- emitter ledctl 1
+    handler per "blinkPeriod" $ do
       o <- emitter ostream 32
-      callbackV $ \input -> do
-        putc o input -- echo to terminal
-        let testChar = (input `isChar`)
-        cond_
-          [ testChar '1'  ==> puts o "\r\noutput on\r\n"  >> emitV l true
-          , testChar '2'  ==> puts o "\r\noutput off\r\n" >> emitV l false
-          , ((testChar '\n') .|| (testChar '\r')) ==> puts o prompt
-          ]
-  where prompt = "tower> "
+      l <- emitter ledctl 1
+
+      callbackV $ const $ do
+        puts o "a"
+
+-- build a DRV8301 register read message
+drv_msg_read :: DrvAddr -> Drv8301
+drv_msg_read addr = drv_msg drv_read addr (fromRep 0)
+
+-- build a DRV8301 control message
+drv_msg :: DrvRW -> DrvAddr -> Bits 11 -> Drv8301
+drv_msg rw addr c = fromRep $ withBits 0 $ do
+  setField drv_rw rw
+  setField drv_addr addr
+  setField drv_data c
+
+-- create an SPI request from device and Drv8301 data
+spi_req :: (GetAlloc eff ~ 'Scope s)
+        => SPIDeviceHandle
+        -> Drv8301
+        -> Ivory eff (ConstRef ('Stack s) ('Struct "spi_transaction_request"))
+spi_req dev msg = fmap constRef $ local $ istruct
+              [ tx_device .= ival dev
+              , tx_buf    .= iarray [h msg, l msg]
+              , tx_len    .= ival 2
+              ]
+  where l x = ival $ bitCast $ toRep x
+        h x = ival $ bitCast $ (toRep x) `iShiftR` 8

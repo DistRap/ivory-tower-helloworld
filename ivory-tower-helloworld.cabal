@@ -1,119 +1,65 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 79f2afcc45b6fe1768d7a3dc5196a48784fe1514bd4489647aec61b904e2c0d6
 
-name:                ivory-tower-helloworld
-version:             0.1.0.0
-synopsis:            helloworld application
--- description:
-license:             BSD3
-author:              Your name here
-maintainer:          example@example.org
-copyright:           2017 Your name here
--- category:
-build-type:          Simple
-cabal-version:       >=1.10
+name:           ivory-tower-helloworld
+version:        0.1.0.0
+synopsis:       helloworld application
+author:         Your name here
+maintainer:     example@example.org
+copyright:      2017 Your name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
 
 library
-  hs-source-dirs:      src
-  exposed-modules:     Hello.Tests.Platforms
-                       Hello.Tests.Blink
-                       Hello.Tests.SimpleBlink
-                       Hello.Tests.CANSendRecv
-                       Hello.Tests.CAN2UART
-                       Hello.Tests.UART
-                       --Hello.App
-                       --Hello.Platforms
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  build-depends:
+      base >=4.6
+    , ivory
+    , ivory-bsp-stm32
+    , ivory-bsp-tests
+    , ivory-hw
+    , ivory-serialize
+    , ivory-stdlib
+    , ivory-tower-base
+    , ivory-tower-drivers
+    , monadLib
+    , tower >=0.9
+    , tower-config
+    , tower-freertos-stm32 >=0.9
+    , tower-hal
+  exposed-modules:
+      Hello.Tests.Platforms
+      Hello.Tests.Blink
+      Hello.Tests.SimpleBlink
+      Hello.Tests.CANSendRecv
+      Hello.Tests.CAN2UART
+      Hello.Tests.UART
+      Hello.Tests.MAX7219
+  default-language: Haskell2010
 
-  build-depends:       base >= 4.6,
-                       monadLib,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-hw,
-                       tower              >= 0.9,
-                       tower-config,
-                       tower-hal,
-                       tower-freertos-stm32 >= 0.9,
-                       ivory-tower-base,
-                       ivory-bsp-stm32,
-                       ivory-bsp-tests
-
-  default-language:    Haskell2010
-  ghc-options:         -Wall
-
-executable blink-test-gen
-  main-is:             BlinkTest.hs
-  hs-source-dirs:      test
-  build-depends:       base >= 4.6,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-backend-c,
-                       ivory-hw,
-                       tower          >= 0.9,
-                       tower-config,
-                       tower-freertos-stm32,
-                       ivory-bsp-stm32,
-                       ivory-bsp-tests,
-                       ivory-tower-helloworld
-  ghc-options:          -Wall
-
-executable simpleblink-test-gen
-  main-is:             SimpleBlinkTest.hs
-  hs-source-dirs:      test
-  build-depends:       base >= 4.6,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-backend-c,
-                       ivory-hw,
-                       tower          >= 0.9,
-                       tower-config,
-                       tower-freertos-stm32,
-                       ivory-bsp-stm32,
-                       ivory-bsp-tests,
-                       ivory-tower-helloworld
-  ghc-options:          -Wall
-
-executable cansendrecv-test-gen
-  main-is:             CANSendRecvTest.hs
-  hs-source-dirs:      test
-  build-depends:       base >= 4.6,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-backend-c,
-                       ivory-hw,
-                       tower          >= 0.9,
-                       tower-config,
-                       tower-freertos-stm32,
-                       ivory-bsp-stm32,
-                       ivory-bsp-tests,
-                       ivory-tower-helloworld
-  ghc-options:          -Wall
-
-executable can2uart-test-gen
-  main-is:             CAN2UARTTest.hs
-  hs-source-dirs:      test
-  build-depends:       base >= 4.6,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-backend-c,
-                       ivory-hw,
-                       tower          >= 0.9,
-                       tower-config,
-                       tower-freertos-stm32,
-                       ivory-bsp-stm32,
-                       ivory-bsp-tests,
-                       ivory-tower-helloworld
-  ghc-options:          -Wall
-
-executable uart-test-gen
-  main-is:             UARTTest.hs
-  hs-source-dirs:      test
-  build-depends:       base >= 4.6,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-backend-c,
-                       ivory-hw,
-                       tower          >= 0.9,
-                       tower-config,
-                       tower-freertos-stm32,
-                       ivory-bsp-stm32,
-                       ivory-bsp-tests,
-                       ivory-tower-helloworld
- ghc-options:          -Wall
+executable max7219-test-gen
+  main-is: MAX7219Test.hs
+  hs-source-dirs:
+      test
+  ghc-options: -Wall
+  build-depends:
+      base >=4.6
+    , ivory
+    , ivory-backend-c
+    , ivory-bsp-stm32
+    , ivory-bsp-tests
+    , ivory-hw
+    , ivory-stdlib
+    , ivory-tower-drivers
+    , ivory-tower-helloworld
+    , tower >=0.9
+    , tower-config
+    , tower-freertos-stm32
+  default-language: Haskell2010
