@@ -35,7 +35,7 @@ clean: $(CLEANS)
 
 define MKTEST
 $(1):
-	$(STACK) build . --exec '$(1)-gen --src-dir=build/$(1) $(IVORYFLAGS)'
+	cabal new-run $(1)-gen -- --src-dir=build/$(1) $(IVORYFLAGS)
 	make -C build/$(1)
 $(1)-clean:
 	rm -rf build/$(1)

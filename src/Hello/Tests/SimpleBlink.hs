@@ -6,7 +6,7 @@ import Ivory.Language
 import Ivory.Tower
 import Ivory.HW.Module
 
-import Ivory.BSP.STM32.Peripheral.GPIOF4
+import Ivory.BSP.STM32.Peripheral.GPIO --F4
 
 -- This artificial Tower program toggles LED when
 -- message arrives on its channel

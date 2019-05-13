@@ -6,6 +6,8 @@
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE RecordWildCards #-}
 
+module Hello.Tests.Platforms where
+{-
 module Hello.Tests.Platforms
   ( testPlatformParser
   , ColoredLEDs(..)
@@ -23,6 +25,7 @@ module Hello.Tests.Platforms
 import Ivory.Tower.Config
 import Data.Char (toUpper)
 
+import Ivory.BSP.STM32.ClockConfig
 import qualified Ivory.BSP.STM32F405.CAN         as F405
 import qualified Ivory.BSP.STM32F405.UART        as F405
 import qualified Ivory.BSP.STM32F405.GPIO        as F405
@@ -31,6 +34,7 @@ import qualified Ivory.BSP.STM32F405.SPI         as F405
 import qualified Ivory.BSP.STM32F405.I2C         as F405
 import qualified Ivory.BSP.STM32F405.RNG         as F405
 
+
 import Ivory.BSP.STM32.Peripheral.CAN
 import Ivory.BSP.STM32.Peripheral.GPIOF4
 import Ivory.BSP.STM32.Peripheral.UART
@@ -38,7 +42,6 @@ import Ivory.BSP.STM32.Peripheral.SPI hiding (ActiveHigh, ActiveLow)
 import Ivory.BSP.STM32.Peripheral.I2C
 import Ivory.BSP.STM32.Peripheral.RNG
 import Ivory.BSP.STM32.Peripheral.UART.DMA
-import Ivory.BSP.STM32.ClockConfig
 import Ivory.BSP.STM32.Config
 
 import Ivory.Tower.Base
@@ -306,3 +309,5 @@ f7Config xtal_mhz = STM32Config
              , div_pclk1 = 4
              , div_pclk2 = 2
              }
+
+-}
