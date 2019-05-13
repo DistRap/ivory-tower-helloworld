@@ -5,31 +5,31 @@ import Ivory.HW
 
 
 
-import Ivory.BSP.STM32.Peripheral.GPIO1.Peripheral
+import Ivory.BSP.STM32.Peripheral.GPIO2.Peripheral
 
-import Ivory.BSP.STM32F103.MemoryMap
-import Ivory.BSP.STM32F103.RCC
+import Ivory.BSP.STM32L432.MemoryMap
+import Ivory.BSP.STM32L432.RCC
 
 
 gpioA :: GPIOPort
 gpioA = mkGPIOPort gpioa_periph_base
-          (rccEnable rcc_apb2enr_iopaen)
-          (rccDisable rcc_apb2enr_iopaen)
+          (rccEnable rcc_ahb2enr_gpioaen)
+          (rccDisable rcc_ahb2enr_gpioaen)
           0
 
 gpioB :: GPIOPort
 gpioB = mkGPIOPort gpiob_periph_base
-          (rccEnable rcc_apb2enr_iopben)
-          (rccDisable rcc_apb2enr_iopben)
+          (rccEnable rcc_ahb2enr_gpioben)
+          (rccDisable rcc_ahb2enr_gpioben)
           0
 
 gpioC :: GPIOPort
 gpioC = mkGPIOPort gpioc_periph_base
-          (rccEnable rcc_apb2enr_iopcen)
-          (rccDisable rcc_apb2enr_iopcen)
+          (rccEnable rcc_ahb2enr_gpiocen)
+          (rccDisable rcc_ahb2enr_gpiocen)
           0
 
-rccEnable :: BitDataField RCC_APB2ENR Bit -> Ivory eff ()
-rccEnable f = modifyReg rcc_reg_apb2enr $ setBit f
-rccDisable :: BitDataField RCC_APB2ENR Bit -> Ivory eff ()
-rccDisable f = modifyReg rcc_reg_apb2enr $ clearBit f
+rccEnable :: BitDataField RCC_AHB2ENR Bit -> Ivory eff ()
+rccEnable f = modifyReg rcc_reg_ahb2enr $ setBit f
+rccDisable :: BitDataField RCC_AHB2ENR Bit -> Ivory eff ()
+rccDisable f = modifyReg rcc_reg_ahb2enr $ clearBit f

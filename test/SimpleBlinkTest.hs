@@ -12,13 +12,13 @@ import Port
 import Pin
 import Ivory.BSP.STM32.Peripheral.GPIO
 
-lol = go (matchMCU "STM32F103C8")
+lol = go (matchMCU "STM32L432KCU6")
   where
   go (Just x) = \_ -> x
   go Nothing = fail "Unable to match MCU!"
 
 
-pin = GPIOF1 pinC13
+pin = GPIOFX pinB3
 
 main :: IO ()
 main = compileTowerSTM32FreeRTOS lol p $
