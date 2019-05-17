@@ -7,6 +7,7 @@ import Ivory.Tower
 import Ivory.HW.Module
 
 import Ivory.BSP.STM32.Peripheral.GPIO --F4
+import Ivory.BSP.STM32.ClockConfig (ClockConfig)
 
 -- This artificial Tower program toggles LED when
 -- message arrives on its channel
@@ -47,13 +48,13 @@ ledToggle ledPin = do
   return (cIn)
 
 -- main Tower of our application
-app :: (e -> GPIOPin) -> Tower e ()
-app toledpin = do
+app :: (e -> GPIOPin) -> (e -> ClockConfig) -> Tower e ()
+app toledpin tocc = do
   ledpin <- fmap toledpin getEnv
 
   -- creates a period that fires every 500ms
   -- `per` is a ChanOutput, specifically ChanOutput ('Stored ITime)
-  per <- period (Milliseconds 500)
+  per <- period (Milliseconds 20)
 
   -- create our ledToggle tower
   togIn <- ledToggle ledpin

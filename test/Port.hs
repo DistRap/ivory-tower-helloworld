@@ -21,13 +21,13 @@ gpioB :: GPIOPort
 gpioB = mkGPIOPort gpiob_periph_base
           (rccEnable rcc_ahb2enr_gpioben)
           (rccDisable rcc_ahb2enr_gpioben)
-          0
+          1
 
 gpioC :: GPIOPort
 gpioC = mkGPIOPort gpioc_periph_base
           (rccEnable rcc_ahb2enr_gpiocen)
           (rccDisable rcc_ahb2enr_gpiocen)
-          0
+          2
 
 rccEnable :: BitDataField RCC_AHB2ENR Bit -> Ivory eff ()
 rccEnable f = modifyReg rcc_reg_ahb2enr $ setBit f
