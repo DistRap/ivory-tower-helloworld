@@ -11,6 +11,7 @@ IVORYFLAGS ?= --const-fold --verbose
 TESTS      := \
 	cansendrecv-test \
 	can2uart-test \
+	iot01a-test \
 	uart-test \
 	simpleblink-test \
 	blink-test
@@ -38,6 +39,7 @@ $(1):
 	cabal new-run $(1)-gen -- --src-dir=build/$(1) $(IVORYFLAGS)
 	make -C build/$(1)
 $(1)-clean:
+	rm -rf dist-newstyle
 	rm -rf build/$(1)
 $(1)-gdb: $(1)
 	$(GDB) build/$(1)/image

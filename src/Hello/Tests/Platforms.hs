@@ -7,7 +7,116 @@
 {-# LANGUAGE RecordWildCards #-}
 
 module Hello.Tests.Platforms where
+
+
+import Ivory.Tower.Base (LED)
+
+import Ivory.BSP.STM32.MCU
+import Ivory.BSP.STM32.Peripheral.CAN
+import Ivory.BSP.STM32.Peripheral.GPIO
+import Ivory.BSP.STM32.Peripheral.UART
+import Ivory.BSP.STM32.Peripheral.SPI -- hiding (ActiveHigh, ActiveLow)
+import Ivory.BSP.STM32.Peripheral.I2C
+import Ivory.BSP.STM32.Peripheral.RNG
+
+data Platform = Platform {
+    platformConf :: STM32Config
+  , platformPin      :: GPIOPin
+  -- platformLED
+  , platformSPI      :: SPI
+  , platformSPIPins  :: SPIPins
+  , platformSPIDevs  :: [ SPIDevice ]
+  , platformI2C      :: I2C
+  , platformI2CPins  :: I2CPins
+  , platformUART     :: UART
+  , platformUARTPins :: UARTPins
+  }
+
+
 {-
+ -- OLD platform(s)
+ -- XXX: needs work
+data ColoredLEDs =
+  ColoredLEDs
+    { redLED  :: LED
+    , blueLED :: LED
+    }
+
+data UARTConfig =
+  UARTConfig
+    { uartPeriph :: UART
+    , uartPins   :: UARTPins
+    }
+
+data SPIConfig =
+  SPIConfig
+    { spiPeriph :: SPI
+    , spiPins   :: SPIPins
+    }
+
+data I2CConfig =
+  I2CConfig
+    { i2cPeriph :: I2C
+    , i2cPins   :: I2CPins
+    }
+
+data CANConfig =
+  CANConfig
+    { canPeriph  :: CANPeriph
+    , canRxPin   :: GPIOPin
+    , canTxPin   :: GPIOPin
+    , canFilters :: CANPeriphFilters
+    }
+
+
+patformParser :: ConfigParser Platform
+platformParser = do
+  p <- subsection "args" $ subsection "platform" string
+  case map toUpper p of
+--    "HELLO4DISCO"       -> result hello4disco
+--    "HELLOF0"           -> result hellof0
+--    "HELLO7DISCO"       -> result hello7disco
+    "STMSTAMP"       -> result stmstamp
+    _ -> fail ("no such platform " ++ p)
+
+  where
+  result platform = do
+    --conf <- stm32ConfigParser (platform_stm32 platform)
+    --return platform { testplatform_stm32 = conf }
+    return platform
+
+data Platform =
+  Platform
+    { platform_leds   :: ColoredLEDs
+    , platform_uart   :: TestUART
+    , platform_i2c    :: TestI2C
+    , platform_can1   :: TestCAN
+    , platform_rng    :: RNG
+    , platform_mcu    :: MCU
+    -- Used by SimpleBlink
+    --, testplatform_ledpin :: GPIOPin
+    }
+
+
+stmstamp_uart1 = UARTConfig
+    { uartPeriph = F765.usart1
+    , uartPins = UARTPins
+        { uartPinTx = F765.pinA9
+        , uartPinRx = F765.pinA10
+        , uartPinAF = F765.gpio_af_uart1
+        }
+    }
+
+
+
+data TestDMA =
+  TestDMA
+    { testDMAUARTPeriph :: DMAUART
+    , testDMAUARTPins   :: UARTPins
+    }
+
+
+
 module Hello.Tests.Platforms
   ( testPlatformParser
   , ColoredLEDs(..)
@@ -60,45 +169,6 @@ testPlatformParser = do
   result platform = do
     conf <- stm32ConfigParser (testplatform_stm32 platform)
     return platform { testplatform_stm32 = conf }
-
-data ColoredLEDs =
-  ColoredLEDs
-    { redLED  :: LED
-    , blueLED :: LED
-    }
-
-data TestUART =
-  TestUART
-    { testUARTPeriph :: UART
-    , testUARTPins   :: UARTPins
-    }
-
-data TestSPI =
-  TestSPI
-    { testSPIPeriph :: SPIPeriph
-    , testSPIPins   :: SPIPins
-    -- TODO FIXME: move CS pins for test devices into TestSPI
-    }
-
-data TestI2C =
-  TestI2C
-    { testI2C     :: I2CPeriph
-    , testI2CPins :: I2CPins
-    }
-
-data TestCAN =
-  TestCAN
-    { testCAN        :: CANPeriph
-    , testCANRX      :: GPIOPin
-    , testCANTX      :: GPIOPin
-    , testCANFilters :: CANPeriphFilters
-    }
-
-data TestDMA =
-  TestDMA
-    { testDMAUARTPeriph :: DMAUART
-    , testDMAUARTPins   :: UARTPins
-    }
 
 data TestPlatform =
   TestPlatform
@@ -189,14 +259,6 @@ hello7disco = TestPlatform
   }
 
 -- STMSTAMP
-stmstamp_uart1 = TestUART
-    { testUARTPeriph = F405.uart1
-    , testUARTPins = UARTPins
-        { uartPinTx = F405.pinA9
-        , uartPinRx = F405.pinA10
-        , uartPinAF = F405.gpio_af_uart1
-        }
-    }
 
 stmstamp_uart2 = TestUART
     { testUARTPeriph = F405.uart2

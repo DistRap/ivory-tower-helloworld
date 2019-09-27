@@ -1,3 +1,4 @@
 build
 .stack-work
 .gdb_history
+.ghc.environment*

@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Hello.Tests.SimpleBlink where
 
@@ -6,8 +7,10 @@ import Ivory.Language
 import Ivory.Tower
 import Ivory.HW.Module
 
-import Ivory.BSP.STM32.Peripheral.GPIO --F4
+import Ivory.BSP.STM32.Peripheral.GPIO
 import Ivory.BSP.STM32.ClockConfig (ClockConfig)
+
+import Hello.Tests.Platforms
 
 -- This artificial Tower program toggles LED when
 -- message arrives on its channel
@@ -48,16 +51,16 @@ ledToggle ledPin = do
   return (cIn)
 
 -- main Tower of our application
-app :: (e -> GPIOPin) -> (e -> ClockConfig) -> Tower e ()
-app toledpin tocc = do
-  ledpin <- fmap toledpin getEnv
+app :: (e -> ClockConfig) -> (e -> Platform) -> Tower e ()
+app tocc toPlatform = do
+  Platform{..} <- fmap toPlatform getEnv
 
   -- creates a period that fires every 500ms
   -- `per` is a ChanOutput, specifically ChanOutput ('Stored ITime)
-  per <- period (Milliseconds 20)
+  per <- period (Milliseconds 1000)
 
   -- create our ledToggle tower
-  togIn <- ledToggle ledpin
+  togIn <- ledToggle platformPin
 
   -- this monitor simply forwards `per` messages to `togIn` ChanInput
   monitor "blink" $ do
