@@ -73,10 +73,11 @@ app tocc toPlatform = do
         humi <- deref showHumi
         displayed <- assign $ humi ? (h, t)
 
-        str <- floatingToString (displayed) 3
+        str <- floatingToString (displayed) 4
+        prefix <- assign $ humi ? (fromIntegral $ ord 'H', fromIntegral $ ord 'T')
+        store ((str ~> stringDataL) ! 0) prefix
         refCopy dbg str
         emit disp (constRef str)
-        return ()
 
     handler toggleDisplay "toggleDisplay" $ do
       callback $ const $ do
