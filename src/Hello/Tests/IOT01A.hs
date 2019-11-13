@@ -43,9 +43,8 @@ app tocc toPlatform = do
 
   (sreq, sready) <- spiTower tocc platformSPIDevs platformSPIPins
 
-  (displayIn, displayOut) <- channel
+  (displayIn, intensityIn) <- max7219 sreq (SPIDeviceHandle 0) (Proxy :: Proxy UARTBuffer)
 
-  max7219 sreq (SPIDeviceHandle 0) sready displayOut (Proxy :: Proxy UARTBuffer)
   uartTowerDeps
 
   togIn <- ledToggle ledpin
