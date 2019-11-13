@@ -9,6 +9,7 @@ endif
 TARGET ?= /dev/ttyACM0
 IVORYFLAGS ?= --const-fold --verbose
 TESTS      := \
+	bluepill-test \
 	cansendrecv-test \
 	can2uart-test \
 	iot01a-test \

@@ -15,6 +15,7 @@ library
   hs-source-dirs:      src
   exposed-modules:
                        Hello.Tests.Blink
+                       Hello.Tests.Bluepill
                        Hello.Tests.SimpleBlink
                        Hello.Tests.IOT01A
                        Hello.Tests.Platforms
@@ -47,6 +48,14 @@ executable blink-test-gen
   main-is:             BlinkTest.hs
   hs-source-dirs:      test
   build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable bluepill-test-gen
+  main-is:             BluepillTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-bsp-stm32,
                        ivory-tower-helloworld
   ghc-options:          -Wall
 
