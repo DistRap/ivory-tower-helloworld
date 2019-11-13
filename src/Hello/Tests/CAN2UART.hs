@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
@@ -20,24 +21,21 @@ import Ivory.Tower.Base
 import Ivory.Tower.Base.UART.Types
 
 app :: (e -> ClockConfig)
-    -> (e -> TestCAN)
-    -> (e -> TestUART)
-    -> (e -> ColoredLEDs)
+    -> (e -> Platform)
     -> Tower e ()
-app tocc totestcan touart toleds = do
-  uartTowerDeps
+app tocc toPlatform = do
+  Platform{..} <- fmap toPlatform getEnv
 
-  can  <- fmap totestcan getEnv
-  leds <- fmap toleds getEnv
-  uart <- fmap touart getEnv
+  uartTowerDeps
 
   (canctl_input, canctl_output) <- channel
 
-  (ostream, istream) <- bufferedUartTower tocc (testUARTPeriph uart) (testUARTPins uart) 115200 (Proxy :: Proxy UARTBuffer)
+  (ostream, istream) <- bufferedUartTower tocc platformUART platformUARTPins 115200 (Proxy :: Proxy UARTBuffer)
 
   echoPrompt "hello world" ostream istream canctl_input
 
-  (res, req, _, _) <- canTower tocc (testCAN can) 1000000 (testCANRX can) (testCANTX can)
+  (res, req, _, _) <- canTower tocc (canPeriph platformCAN) 1000000
+    (canRxPin $ platformCAN) (canTxPin $ platformCAN)
 
   canSendTower req canctl_output
 
@@ -45,11 +43,10 @@ app tocc totestcan touart toleds = do
     handler systemInit "init" $ do
       callback $ const $ do
         let emptyID = CANFilterID32 (fromRep 0) (fromRep 0) False False
-        canFilterInit (testCANFilters can)
+        canFilterInit (canFilters $ platformCAN)
                       [CANFilterBank CANFIFO0 CANFilterMask $ CANFilter32 emptyID emptyID]
                       [CANFilterBank CANFIFO1 CANFilterMask $ CANFilter32 emptyID emptyID]
-        ledSetup $ redLED leds
-        ledSetup $ blueLED leds
+        ledSetup $ platformRedLED
 
     received <- stateInit "can_received_count" (ival (0 :: Uint32))
 
@@ -69,8 +66,8 @@ app tocc totestcan touart toleds = do
         puts o "\n\r/rcv\n\r"
 
         ifte_ (count .& 1 ==? 1)
-          (ledOff $ blueLED leds)
-          (ledOn  $ blueLED leds)
+          (ledOff platformRedLED)
+          (ledOn platformRedLED)
 
 echoPrompt :: String
            -> ChanInput  ('Stored Uint8)

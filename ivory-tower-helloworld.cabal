@@ -14,15 +14,17 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:
-                       --Hello.Tests.Blink
+                       Hello.Tests.Blink
                        Hello.Tests.SimpleBlink
                        Hello.Tests.IOT01A
                        Hello.Tests.Platforms
-                       --Hello.Tests.CANSendRecv
-                       --Hello.Tests.CAN2UART
-                       --Hello.Tests.UART
-                       --Hello.App
-                       --Hello.Platforms
+                       Hello.Tests.Platforms.Types
+                       Hello.Tests.Platforms.Bluepill
+                       Hello.Tests.Platforms.IOT01A
+                       Paths_ivory_tower_helloworld
+                       Hello.Tests.CANSendRecv
+                       Hello.Tests.CAN2UART
+                       Hello.Tests.UART
 
   build-depends:       base >= 4.6,
                        monadLib,
@@ -41,104 +43,45 @@ library
   default-language:    Haskell2010
   ghc-options:         -Wall
 
---executable blink-test-gen
---  main-is:             BlinkTest.hs
---  hs-source-dirs:      test
---  build-depends:       base >= 4.6,
---                       ivory,
---                       ivory-stdlib,
---                       ivory-backend-c,
---                       ivory-hw,
---                       tower          >= 0.9,
---                       tower-config,
---                       tower-freertos-stm32,
---                       ivory-bsp-stm32,
---                       --ivory-bsp-tests,
---                       ivory-tower-helloworld
---  ghc-options:          -Wall
+executable blink-test-gen
+  main-is:             BlinkTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall
 
 executable simpleblink-test-gen
   main-is:             SimpleBlinkTest.hs
   hs-source-dirs:      test
   build-depends:       base >= 4.6,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-backend-c,
-                       ivory-hw,
-                       tower          >= 0.9,
-                       tower-config,
-                       tower-freertos-stm32,
-                       ivory-bsp-stm32,
-                       ivory-tower-base,
-                       ivory-tower-drivers,
                        ivory-tower-helloworld
   ghc-options:          -Wall
 
 
--- executable cansendrecv-test-gen
---   main-is:             CANSendRecvTest.hs
---   hs-source-dirs:      test
---   build-depends:       base >= 4.6,
---                        ivory,
---                        ivory-stdlib,
---                        ivory-backend-c,
---                        ivory-hw,
---                        tower          >= 0.9,
---                        tower-config,
---                        tower-freertos-stm32,
---                        ivory-bsp-stm32,
---                        ivory-bsp-tests,
---                        ivory-tower-helloworld
---   ghc-options:          -Wall
--- 
--- executable can2uart-test-gen
---   main-is:             CAN2UARTTest.hs
---   hs-source-dirs:      test
---   build-depends:       base >= 4.6,
---                        ivory,
---                        ivory-stdlib,
---                        ivory-backend-c,
---                        ivory-hw,
---                        tower          >= 0.9,
---                        tower-config,
---                        tower-freertos-stm32,
---                        ivory-bsp-stm32,
---                        ivory-bsp-tests,
---                        ivory-tower-helloworld
---   ghc-options:          -Wall
+executable cansendrecv-test-gen
+  main-is:             CANSendRecvTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable can2uart-test-gen
+  main-is:             CAN2UARTTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall
 
 executable iot01a-test-gen
   main-is:             IOT01ATest.hs
   hs-source-dirs:      test
   build-depends:       base >= 4.6,
-                       ivory,
-                       ivory-stdlib,
-                       ivory-backend-c,
-                       ivory-hw,
-                       tower          >= 0.9,
-                       tower-config,
-                       tower-freertos-stm32,
-                       ivory-bsp-stm32,
-                       ivory-tower-base,
-                       ivory-tower-drivers,
                        ivory-tower-helloworld
   ghc-options:          -Wall
 
-
-
--- 
--- executable uart-test-gen
---   main-is:             UARTTest.hs
---   hs-source-dirs:      test
---   build-depends:       base >= 4.6,
---                        ivory,
---                        ivory-stdlib,
---                        ivory-backend-c,
---                        ivory-hw,
---                        tower          >= 0.9,
---                        tower-config,
---                        tower-freertos-stm32,
---                        ivory-bsp-stm32,
---                        ivory-bsp-tests,
---                        ivory-tower-helloworld
---  ghc-options:          -Wall
+executable uart-test-gen
+  main-is:             UARTTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall

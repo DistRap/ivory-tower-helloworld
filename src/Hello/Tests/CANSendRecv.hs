@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
@@ -18,14 +19,13 @@ import Hello.Tests.Platforms
 import Ivory.Tower.Base
 
 app :: (e -> ClockConfig)
-    -> (e -> TestCAN)
-    -> (e -> ColoredLEDs)
+    -> (e -> Platform)
     -> Tower e ()
-app tocc totestcan toleds = do
-  can  <- fmap totestcan getEnv
-  leds <- fmap toleds    getEnv
+app tocc toPlatform = do
+  Platform{..} <- fmap toPlatform getEnv
 
-  (res, req, _, _) <- canTower tocc (testCAN can) 1000000 (testCANRX can) (testCANTX can)
+  (res, req, _, _) <- canTower tocc (canPeriph platformCAN) 1000000
+    (canRxPin $ platformCAN) (canTxPin $ platformCAN)
 
   periodic <- period (Milliseconds 250)
 
@@ -33,11 +33,11 @@ app tocc totestcan toleds = do
     handler systemInit "init" $ do
       callback $ const $ do
         let emptyID = CANFilterID32 (fromRep 0) (fromRep 0) False False
-        canFilterInit (testCANFilters can)
+        canFilterInit (canFilters $ platformCAN)
                       [CANFilterBank CANFIFO0 CANFilterMask $ CANFilter32 emptyID emptyID]
                       []
-        ledSetup $ redLED leds
-        ledOn    $ redLED leds
+        ledSetup $ platformRedLED
+        ledOn    $ platformRedLED
 
     tx_pending <- state "tx_pending"
     last_sent  <- state "last_sent"
@@ -77,5 +77,5 @@ app tocc totestcan toleds = do
         count <- deref received
         store received (count + 1)
         ifte_ (count .& 1 ==? 0)
-          (ledOff $ redLED leds)
-          (ledOn  $ redLED leds)
+          (ledOff platformRedLED)
+          (ledOn platformRedLED)

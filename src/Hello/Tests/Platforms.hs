@@ -1,36 +1,61 @@
-{-# LANGUAGE Rank2Types #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE ExistentialQuantification #-}
-{-# LANGUAGE RecordWildCards #-}
+module Hello.Tests.Platforms (
+    platformParser
+  , getPlatform
+  , platformParser
+  , buildHelloApp
+  , module Hello.Tests.Platforms.Bluepill
+  , module Hello.Tests.Platforms.IOT01A
+  , module Hello.Tests.Platforms.Types
+  ) where
 
-module Hello.Tests.Platforms where
+import Hello.Tests.Platforms.Types
+import Hello.Tests.Platforms.Bluepill
+import Hello.Tests.Platforms.IOT01A
 
+import Data.Char (toUpper)
+import Ivory.Tower
+import Ivory.Tower.Options
+import Ivory.Tower.Config
+import Ivory.OS.FreeRTOS.Tower.STM32
+import Ivory.BSP.STM32.ClockConfig
 
-import Ivory.Tower.Base (LED)
+platformParser :: Platform -> NamedMCU -> ConfigParser Platform
+platformParser defPlatform nmcu = do
+  p <- (subsection "args" $ subsection "platform" string) <|> pure "default"
+  case map toUpper p of
+    "BLUEPILL"       -> result bluepill
+    "IOT01A"         -> result iot01a
+    "DEFAULT"        -> result defPlatform
+    _ -> fail ("no such platform " ++ p)
 
-import Ivory.BSP.STM32.MCU
-import Ivory.BSP.STM32.Peripheral.CAN
-import Ivory.BSP.STM32.Peripheral.GPIO
-import Ivory.BSP.STM32.Peripheral.UART
-import Ivory.BSP.STM32.Peripheral.SPI -- hiding (ActiveHigh, ActiveLow)
-import Ivory.BSP.STM32.Peripheral.I2C
-import Ivory.BSP.STM32.Peripheral.RNG
+  where
+  result platform = do
+    return $ platform {
+        platformConf = STM32Config {
+            confMCU = nmcu
+          , confClocks = platformClocks platform
+        }
+      }
 
-data Platform = Platform {
-    platformConf :: STM32Config
-  , platformPin      :: GPIOPin
-  -- platformLED
-  , platformSPI      :: SPI
-  , platformSPIPins  :: SPIPins
-  , platformSPIDevs  :: [ SPIDevice ]
-  , platformI2C      :: I2C
-  , platformI2CPins  :: I2CPins
-  , platformUART     :: UART
-  , platformUARTPins :: UARTPins
-  }
+-- allows overriding platform, default platforms MCU and few of its params
+-- via default.conf
+getPlatform :: Platform -> TOpts -> IO Platform
+getPlatform defPlatform topts = do
+    mcuName <- getConfig topts (mcuNameParser (platformMCU defPlatform))
+    nmcu <- matchMCU mcuName
+    nmcu' <- getConfig topts (mcuConfigParser nmcu)
+    getConfig topts (platformParser defPlatform nmcu')
+
+-- for our helloworld applications
+-- with type
+-- app :: (e -> ClockConfig) -> (e -> Platform) -> Tower e ()
+-- we can define this helper
+buildHelloApp :: Platform
+       -> ((Platform -> ClockConfig) -> (Platform -> Platform) -> Tower Platform ())
+       -> IO ()
+buildHelloApp def twrapp = compileTowerSTM32FreeRTOS
+  platformConf (getPlatform def) $ twrapp (confClocks . platformConf) id
+
 
 
 {-

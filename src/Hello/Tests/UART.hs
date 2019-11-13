@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
@@ -20,20 +21,18 @@ import Ivory.Tower.Base hiding (putc, puts)
 import Ivory.Tower.Base.UART.Types
 
 app :: (e -> ClockConfig)
-    -> (e -> ColoredLEDs)
-    -> (e -> TestUART)
+    -> (e -> Platform)
     -> Tower e ()
-app tocc toleds touart = do
+app tocc toPlatform = do
   uartTowerDeps
 
-  leds <- fmap toleds getEnv
-  uart <- fmap touart getEnv
+  Platform{..} <- fmap toPlatform getEnv
 
-  (ostream, istream) <- bufferedUartTower tocc (testUARTPeriph uart) (testUARTPins uart) 115200 (Proxy :: Proxy UARTBuffer)
+  (ostream, istream) <- bufferedUartTower tocc platformUART platformUARTPins 115200 (Proxy :: Proxy UARTBuffer)
 
   (ledctl_input, ledctl_output) <- channel
   echoPrompt "hello Ivory Tower world" ostream istream ledctl_input
-  monitor "settableLED" $ ledController [redLED leds] ledctl_output
+  monitor "settableLED" $ ledController [platformRedLED, platformGreenLED] ledctl_output
 
 --------------------------------------------------------------------------------
 echoPrompt :: String

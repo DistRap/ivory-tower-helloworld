@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleContexts #-}
 
@@ -9,6 +10,7 @@ import Ivory.Tower
 import Ivory.HW.Module
 
 import Hello.Tests.Platforms
+import Ivory.BSP.STM32.ClockConfig
 
 import Ivory.Tower.Base.LED hiding (blink, blinker, ledController)
 ------------------------------
@@ -54,8 +56,8 @@ blink per pins = do
   onoff <- blinker per
   monitor "led" $ ledController pins onoff
 
-app :: (e -> ColoredLEDs) -> Tower e ()
-app toleds = do
-  leds <- fmap toleds getEnv
-  blink (Milliseconds 1000) [redLED leds]
-  blink (Milliseconds 666) [blueLED leds]
+app :: (e -> ClockConfig) -> (e -> Platform) -> Tower e ()
+app _tocc toPlatform = do
+  Platform{..} <- fmap toPlatform getEnv
+  blink (Milliseconds 1000) [platformRedLED]
+  blink (Milliseconds 666) [platformGreenLED]

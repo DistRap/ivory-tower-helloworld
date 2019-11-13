@@ -52,7 +52,7 @@ ledToggle ledPin = do
 
 -- main Tower of our application
 app :: (e -> ClockConfig) -> (e -> Platform) -> Tower e ()
-app tocc toPlatform = do
+app _tocc toPlatform = do
   Platform{..} <- fmap toPlatform getEnv
 
   -- creates a period that fires every 500ms
