@@ -12,6 +12,7 @@ TESTS      := \
 	bluepill-test \
 	cansendrecv-test \
 	can2uart-test \
+	i2c-whoami-test \
 	iot01a-test \
 	uart-test \
 	simpleblink-test \

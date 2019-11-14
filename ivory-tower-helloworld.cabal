@@ -17,6 +17,7 @@ library
                        Hello.Tests.Blink
                        Hello.Tests.Bluepill
                        Hello.Tests.SimpleBlink
+                       Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
                        Hello.Tests.Platforms
                        Hello.Tests.Platforms.Types
@@ -76,6 +77,13 @@ executable cansendrecv-test-gen
 
 executable can2uart-test-gen
   main-is:             CAN2UARTTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable i2c-whoami-test-gen
+  main-is:             I2CWhoAmITest.hs
   hs-source-dirs:      test
   build-depends:       base >= 4.6,
                        ivory-tower-helloworld
