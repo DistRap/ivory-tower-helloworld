@@ -29,13 +29,11 @@ spiPins = SPIPins
     { spiPinMiso = pinD3
     , spiPinMosi = pinD4
     , spiPinSck  = pinD1
-    , spiPinAF   = gpio_af5 -- gpio_af_spi2 -- XXX
     }
 
 uartPins = UARTPins
   { uartPinTx = pinB6
   , uartPinRx = pinB7
-  , uartPinAF = gpio_af7
   }
 
 iot01a_cc = ClockConfig { clockconfig_source = MSI $ 16 * 1000 * 1000 -- HSI16
@@ -54,9 +52,9 @@ iot01a_cc = ClockConfig { clockconfig_source = MSI $ 16 * 1000 * 1000 -- HSI16
 pin = pinA5
 
 iot01a = Platform {
-  --  platformConf :: STM32Config
     platformClocks   = iot01a_cc
-  , platformMCU      = "STM32L475VGT6"
+  , platformMCU      = Nothing
+  , platformMCUName  = "STM32L475VGT6"
   , platformPin      = pin
   , platformRedLED   = Base.LED pinB14 Base.ActiveHigh -- green as well
   , platformGreenLED = Base.LED pin Base.ActiveHigh

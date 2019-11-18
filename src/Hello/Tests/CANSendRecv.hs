@@ -33,7 +33,7 @@ app tocc toPlatform = do
     handler systemInit "init" $ do
       callback $ const $ do
         let emptyID = CANFilterID32 (fromRep 0) (fromRep 0) False False
-        canFilterInit (canFilters $ platformCAN)
+        canFilterInit (canPeriphFilters $ platformCAN)
                       [CANFilterBank CANFIFO0 CANFilterMask $ CANFilter32 emptyID emptyID]
                       []
         ledSetup $ platformRedLED

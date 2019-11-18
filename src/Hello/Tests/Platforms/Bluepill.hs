@@ -19,24 +19,23 @@ import qualified Ivory.Tower.Base as Base
 
 bluepill = Platform {
     platformClocks   = bluepill_cc
-  , platformMCU = "STM32F103C8T6"
-  , platformPin = pinC13
-  , platformRedLED = Base.LED pinC13 Base.ActiveHigh
-  , platformSPI = spi1
-  , platformSPIPins = SPIPins
+  , platformMCU      = Nothing
+  , platformMCUName  = "STM32F103C8T6"
+  , platformPin      = pinC13
+  , platformRedLED   = Base.LED pinC13 Base.ActiveHigh
+  , platformSPI      = spi1
+  , platformSPIPins  = SPIPins
     { spiPinMiso = pinA6
     , spiPinMosi = pinA7
     , spiPinSck  = pinA5
-    , spiPinAF   = gpio_af0
     }
-  , platformSPIDevs = []
-  , platformUART = usart2
+  , platformSPIDevs  = []
+  , platformUART     = usart2
   , platformUARTPins = UARTPins
       { uartPinTx = pinA2
       , uartPinRx = pinA3
-      , uartPinAF = gpio_af0
       }
-  , platformCAN = undef "CAN"
+  , platformCAN      = undef "CAN"
   }
 
 -- 72Mhz with 8Mhz external crystal

@@ -13,8 +13,8 @@ import Ivory.BSP.STM32.Peripheral.I2C
 import Ivory.BSP.STM32.Peripheral.RNG
 
 data Platform = Platform {
-    platformConf     :: STM32Config
-  , platformMCU      :: String
+    platformMCU      :: Maybe NamedMCU
+  , platformMCUName  :: String
   , platformClocks   :: ClockConfig
   , platformPin      :: GPIOPin
   , platformRedLED   :: LED
@@ -29,12 +29,11 @@ data Platform = Platform {
   , platformCAN      :: CANConfig
   }
 
-
 undef part = error $ part ++ " is not available on this platform"
 
 data CANConfig = CANConfig
-  { canPeriph  :: CANPeriph
-  , canRxPin   :: GPIOPin
-  , canTxPin   :: GPIOPin
-  , canFilters :: CANPeriphFilters
+  { canPeriph        :: CANPeriph
+  , canPeriphFilters :: CANPeriphFilters
+  , canRxPin         :: GPIOPin
+  , canTxPin         :: GPIOPin
   }

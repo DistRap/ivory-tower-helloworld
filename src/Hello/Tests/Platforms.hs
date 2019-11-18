@@ -1,3 +1,4 @@
+{-# LANGUAGE RecordWildCards #-}
 module Hello.Tests.Platforms (
     platformParser
   , getPlatform
@@ -9,8 +10,8 @@ module Hello.Tests.Platforms (
   ) where
 
 import Hello.Tests.Platforms.Types
-import Hello.Tests.Platforms.Bluepill
-import Hello.Tests.Platforms.IOT01A
+import Hello.Tests.Platforms.Bluepill (bluepill)
+import Hello.Tests.Platforms.IOT01A   (iot01a)
 
 import Data.Char (toUpper)
 import Ivory.Tower
@@ -19,8 +20,8 @@ import Ivory.Tower.Config
 import Ivory.OS.FreeRTOS.Tower.STM32
 import Ivory.BSP.STM32.ClockConfig
 
-platformParser :: Platform -> NamedMCU -> ConfigParser Platform
-platformParser defPlatform nmcu = do
+platformParser :: Platform -> ConfigParser Platform
+platformParser defPlatform = do
   p <- (subsection "args" $ subsection "platform" string) <|> pure "default"
   case map toUpper p of
     "BLUEPILL"       -> result bluepill
@@ -28,23 +29,26 @@ platformParser defPlatform nmcu = do
     "DEFAULT"        -> result defPlatform
     _ -> fail ("no such platform " ++ p)
 
-  where
-  result platform = do
-    return $ platform {
-        platformConf = STM32Config {
-            confMCU = nmcu
-          , confClocks = platformClocks platform
-        }
-      }
-
 -- allows overriding platform, default platforms MCU and few of its params
 -- via default.conf
 getPlatform :: Platform -> TOpts -> IO Platform
 getPlatform defPlatform topts = do
-    mcuName <- getConfig topts (mcuNameParser (platformMCU defPlatform))
+    -- first platformParser
+    p <- getConfig topts (platformParser defPlatform)
+    -- then possible mcu override with default mcu from platform
+    mcuName <- getConfig topts (mcuNameParser (platformMCUName p))
+
+    -- lookup mcu and set in platformMCU
     nmcu <- matchMCU mcuName
-    nmcu' <- getConfig topts (mcuConfigParser nmcu)
-    getConfig topts (platformParser defPlatform nmcu')
+
+    -- mcu options (ram, flash, splitmem..)
+    nmcuCfg <- getConfig topts (mcuConfigParser nmcu)
+
+    return $ p { platformMCU = Just nmcuCfg }
+
+platformToConfig :: Platform -> STM32Config
+platformToConfig Platform{platformMCU = (Just mcu), platformClocks = cc} = STM32Config mcu cc
+platformToConfig _ = error "platformMCU not initialized"
 
 -- for our helloworld applications
 -- with type
@@ -54,7 +58,7 @@ buildHelloApp :: Platform
        -> ((Platform -> ClockConfig) -> (Platform -> Platform) -> Tower Platform ())
        -> IO ()
 buildHelloApp def twrapp = compileTowerSTM32FreeRTOS
-  platformConf (getPlatform def) $ twrapp (confClocks . platformConf) id
+  platformToConfig (getPlatform def) $ twrapp platformClocks id
 
 
 
