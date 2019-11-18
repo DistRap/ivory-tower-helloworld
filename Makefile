@@ -15,6 +15,7 @@ TESTS      := \
 	i2c-whoami-test \
 	iot01a-test \
 	monstick-test \
+	monstick-rn2483-test \
 	uart-test \
 	simpleblink-test \
 	blink-test

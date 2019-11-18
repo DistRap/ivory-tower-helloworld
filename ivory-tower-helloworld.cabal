@@ -20,6 +20,7 @@ library
                        Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
                        Hello.Tests.Monstick
+                       Hello.Tests.Monstick.RN2483
                        Hello.Tests.Platforms
                        Hello.Tests.Platforms.Types
                        Hello.Tests.Platforms.Bluepill
@@ -100,6 +101,13 @@ executable iot01a-test-gen
 
 executable monstick-test-gen
   main-is:             MonstickTest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable monstick-rn2483-test-gen
+  main-is:             MonstickRN2483Test.hs
   hs-source-dirs:      test
   build-depends:       base >= 4.6,
                        ivory-tower-helloworld
