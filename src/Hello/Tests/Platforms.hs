@@ -6,12 +6,14 @@ module Hello.Tests.Platforms (
   , buildHelloApp
   , module Hello.Tests.Platforms.Bluepill
   , module Hello.Tests.Platforms.IOT01A
+  , module Hello.Tests.Platforms.Monstick
   , module Hello.Tests.Platforms.Types
   ) where
 
 import Hello.Tests.Platforms.Types
 import Hello.Tests.Platforms.Bluepill (bluepill)
 import Hello.Tests.Platforms.IOT01A   (iot01a)
+import Hello.Tests.Platforms.Monstick (monstick)
 
 import Data.Char (toUpper)
 import Ivory.Tower
@@ -24,9 +26,10 @@ platformParser :: Platform -> ConfigParser Platform
 platformParser defPlatform = do
   p <- (subsection "args" $ subsection "platform" string) <|> pure "default"
   case map toUpper p of
-    "BLUEPILL"       -> result bluepill
-    "IOT01A"         -> result iot01a
-    "DEFAULT"        -> result defPlatform
+    "BLUEPILL"       -> return bluepill
+    "IOT01A"         -> return iot01a
+    "MONSTICK"       -> return monstick
+    "DEFAULT"        -> return defPlatform
     _ -> fail ("no such platform " ++ p)
 
 -- allows overriding platform, default platforms MCU and few of its params

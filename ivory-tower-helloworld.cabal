@@ -19,10 +19,12 @@ library
                        Hello.Tests.SimpleBlink
                        Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
+                       Hello.Tests.Monstick
                        Hello.Tests.Platforms
                        Hello.Tests.Platforms.Types
                        Hello.Tests.Platforms.Bluepill
                        Hello.Tests.Platforms.IOT01A
+                       Hello.Tests.Platforms.Monstick
                        Paths_ivory_tower_helloworld
                        Hello.Tests.CANSendRecv
                        Hello.Tests.CAN2UART
@@ -91,6 +93,13 @@ executable i2c-whoami-test-gen
 
 executable iot01a-test-gen
   main-is:             IOT01ATest.hs
+  hs-source-dirs:      test
+  build-depends:       base >= 4.6,
+                       ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable monstick-test-gen
+  main-is:             MonstickTest.hs
   hs-source-dirs:      test
   build-depends:       base >= 4.6,
                        ivory-tower-helloworld
