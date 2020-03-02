@@ -12,6 +12,7 @@ import Data.Char (ord)
 import Ivory.Language
 import Ivory.Stdlib
 import Ivory.Tower
+import Ivory.Tower.HAL.Bus.Interface
 import Ivory.HW.Module
 
 import Ivory.BSP.STM32.ClockConfig
@@ -62,8 +63,9 @@ app tocc toPlatform = do
   -- ostream' and dbgstream
   merged <- ostream' `mergeInputs` dbgstream
 
-  istreamCRLF <- crlfBuffer istream' (Proxy :: Proxy UARTBuffer)
-  (rdy, acc, txdone, cmd) <- rn2483 merged istreamCRLF systemInit resetPin (Proxy :: Proxy UARTBuffer)
+  (acc, _cmdMode, BackpressureTransmit cmd txdone) <- rn2483Tower defaultRadioConfig
+    merged istream' systemInit
+    resetPin (Proxy :: Proxy UARTBuffer)
 
   monitor "rnleds" $ do
     monitorModuleDef $ hw_moduledef
@@ -72,10 +74,6 @@ app tocc toPlatform = do
       callback $ const $ do
         ledSetup $ platformRedLED
         ledSetup $ platformGreenLED
-
-    handler rdy "rnRdy" $ do
-      callback $ const $ do
-        ledOn $ platformRedLED
 
     handler acc "rnAccepted" $ do
       cmdE <- emitter cmd 1
