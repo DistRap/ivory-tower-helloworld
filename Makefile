@@ -1,13 +1,7 @@
-#include ../stack.mk
-OSNAME :=$(shell grep -o '^NAME=.*$$' /etc/os-release | cut -d'=' -f2 )
-ifeq ($(OSNAME),NixOS)
-       STACK=stack --nix
-else
-       STACK=stack
-endif
-
-TARGET ?= /dev/ttyACM0
+TARGET     ?= /dev/ttyACM0
 IVORYFLAGS ?= --const-fold --verbose
+#IVORYFLAGS ?=
+APPS       :=
 TESTS      := \
 	bluepill-test \
 	cansendrecv-test \
@@ -20,9 +14,10 @@ TESTS      := \
 	simpleblink-test \
 	blink-test
 
-AADL_TESTS := 
-CLEANS     := $(foreach test,$(TESTS),$(test)-clean) \
-	            $(foreach test,$(AADL_TESTS),$(test)_clean)
+CLEANS     := \
+	$(foreach test,$(TESTS),$(test)-clean) \
+	$(foreach app,$(APPS),$(app)-clean)
+
 GDB := arm-none-eabi-gdb \
 		--ex 'target extended-remote $(TARGET)' \
 		--ex 'monitor connect_srst disable' \
@@ -30,13 +25,9 @@ GDB := arm-none-eabi-gdb \
 		--ex 'set mem inaccessible-by-default off' \
 		--ex 'attach 1'
 
-.PHONY: test clean $(TESTS) $(AADL_TESTS) $(CLEANS)
-test: $(TESTS) $(AADL_TESTS)
+.PHONY: test clean $(TESTS) $(CLEANS)
+test: $(TESTS)
 clean: $(CLEANS)
-
-# FIXME: ideally we would build only target executable
-# needs fixing in stack
-# https://github.com/commercialhaskell/stack/issues/1406
 
 define MKTEST
 $(1):
@@ -55,12 +46,5 @@ $(1)-run: $(1)
 	$(GDB) --ex 'load' --ex 'run' build/$(1)/image
 endef
 
-define MK_AADL_TEST
-$(1):
-	$(STACK) build . --exec '$(1)_gen --src-dir=build_aadl/$(1) $(IVORYFLAGS)'
-$(1)_clean:
-	rm -rf build_aadl/$(1)
-endef
-
+$(foreach test,$(APPS),$(eval $(call MKTEST,$(test))))
 $(foreach test,$(TESTS),$(eval $(call MKTEST,$(test))))
-$(foreach test,$(AADL_TESTS),$(eval $(call MK_AADL_TEST,$(test))))
