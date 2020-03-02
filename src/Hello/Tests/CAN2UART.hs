@@ -32,7 +32,7 @@ app tocc toPlatform = do
 
   (ostream, istream) <- bufferedUartTower tocc platformUART platformUARTPins 115200 (Proxy :: Proxy UARTBuffer)
 
-  echoPrompt "hello world" ostream istream canctl_input
+  canPrompt "hello world" ostream istream canctl_input
 
   (res, req, _, _) <- canTower tocc (canPeriph platformCAN) 1000000
     (canRxPin $ platformCAN) (canTxPin $ platformCAN)
@@ -69,18 +69,19 @@ app tocc toPlatform = do
           (ledOff platformRedLED)
           (ledOn platformRedLED)
 
-echoPrompt :: String
-           -> ChanInput  ('Stored Uint8)
-           -> ChanOutput ('Stored Uint8)
-           -> ChanInput  ('Struct "can_message")
-           -> Tower p ()
-echoPrompt greeting ostream istream canctl = do
+-- | Buffer 8 bytes and send to CAN bus with 0x7FF ID
+canPrompt :: String
+          -> ChanInput  ('Stored Uint8)
+          -> ChanOutput ('Stored Uint8)
+          -> ChanInput  ('Struct "can_message")
+          -> Tower p ()
+canPrompt greeting ostream istream canctl = do
   towerDepends canDriverTypes
   towerModule  canDriverTypes
   p <- period (Milliseconds 1)
 
 
-  monitor "echoprompt" $ do
+  monitor "canprompt" $ do
     (incoming :: Ref 'Global UARTBuffer) <- state "incoming"
     initialized <- stateInit "initialized" (ival false)
 
