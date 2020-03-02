@@ -5,7 +5,6 @@
 
 module Hello.Tests.Bluepill where
 
-import Data.Char (ord)
 import Ivory.Language
 import Ivory.Stdlib
 import Ivory.Tower
@@ -13,12 +12,10 @@ import Ivory.HW.Module
 
 import Ivory.BSP.STM32.Peripheral.GPIO
 import Ivory.BSP.STM32.Driver.SPI
-import Ivory.BSP.STM32.Driver.UART
 import Ivory.BSP.STM32.ClockConfig (ClockConfig)
 
-import Ivory.Tower.Base.UART
+import Ivory.Tower.Base
 import Ivory.Tower.Base.UART.Types
-import Ivory.Tower.Base.Util
 
 import Ivory.Tower.Drivers.Display.MAX7219
 
@@ -27,16 +24,12 @@ import Hello.Tests.Platforms
 app :: (e -> ClockConfig) -> (e -> Platform) -> Tower e ()
 app tocc toPlatform = do
   Platform{..} <- fmap toPlatform getEnv
-  let ledpin = platformPin
 
-  (sreq, sready) <- spiTower tocc platformSPIDevs platformSPIPins
+  (sreq, _sready) <- spiTower tocc platformSPIDevs platformSPIPins
 
   (displayIn, intensityIn) <- max7219 sreq (SPIDeviceHandle 0) (Proxy :: Proxy UARTBuffer)
 
   uartTowerDeps
-
-  togIn' <- ledToggle ledpin
-  (togIn, togOut) <- inputSniffer togIn'
 
   (ostream, istream) <- bufferedUartTower tocc platformUART platformUARTPins 115200 (Proxy :: Proxy UARTBuffer)
   displayBufferN ostream istream displayIn
@@ -73,36 +66,6 @@ triangle per bottom top = do
         emit cE (constRef val)
 
   return (snd c)
-
-ledToggle :: GPIOPin -> Tower e (ChanInput ('Stored IBool))
-ledToggle ledPin = do
-  (cIn, cOut) <- channel
-
-  monitor "ledToggle" $ do
-    monitorModuleDef $ hw_moduledef
-
-    handler systemInit "initLED" $ do
-      callback $ const $ do
-        pinEnable ledPin
-        pinSetMode ledPin gpio_mode_output
-
-    -- LED state
-    ledOn <- stateInit "ledOn" (ival false)
-
-    -- handler for channel output
-    handler cOut "toggleLED" $ do
-      callbackV $ \isOn -> do
-        ifte_ isOn
-          (do
-            pinClear ledPin
-            store ledOn false
-          )
-          (do
-            pinSet ledPin
-            store ledOn true
-          )
-
-  return (cIn)
 
 -- circular string buffer with length 8 for MAX7219 7 segment display
 displayBuffer :: IvoryString buf
