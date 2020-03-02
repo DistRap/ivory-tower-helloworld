@@ -55,7 +55,7 @@ app :: (e -> ClockConfig) -> (e -> Platform) -> Tower e ()
 app _tocc toPlatform = do
   Platform{..} <- fmap toPlatform getEnv
 
-  -- creates a period that fires every 500ms
+  -- creates a period that fires every 1000ms
   -- `per` is a ChanOutput, specifically ChanOutput ('Stored ITime)
   per <- period (Milliseconds 1000)
 
