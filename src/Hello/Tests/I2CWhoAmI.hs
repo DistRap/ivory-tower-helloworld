@@ -5,25 +5,24 @@
 
 module Hello.Tests.I2CWhoAmI where
 
-import Data.Char (ord)
 import Ivory.Language
-import Ivory.Stdlib
 import Ivory.Tower
-import Ivory.HW.Module
 
 import Ivory.Tower.HAL.Bus.Interface
 
-import Ivory.BSP.STM32.Peripheral.GPIO
-import Ivory.BSP.STM32.Driver.I2C
-
 import Ivory.BSP.STM32.ClockConfig (ClockConfig)
+import Ivory.BSP.STM32.Driver.I2C
 
 import Ivory.Tower.Base.LED (ledToggle)
 import Hello.Tests.Platforms
 
 -- HTS221 default address
+addr :: I2CDeviceAddr
 addr = I2CDeviceAddr 0x5F
 
+app :: (a -> ClockConfig)
+    -> (a -> Platform)
+    -> Tower a ()
 app tocc toPlatform = do
   Platform{..} <- fmap toPlatform getEnv
 
