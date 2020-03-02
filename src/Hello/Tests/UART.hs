@@ -17,7 +17,7 @@ import Ivory.BSP.STM32.ClockConfig
 
 import Hello.Tests.Platforms
 
-import Ivory.Tower.Base hiding (putc, puts)
+import Ivory.Tower.Base hiding (echoPrompt, puts, putc)
 import Ivory.Tower.Base.UART.Types
 
 app :: (e -> ClockConfig)
