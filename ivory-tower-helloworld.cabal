@@ -27,6 +27,7 @@ library
                        Hello.Tests.Platforms.CAN4DISCO
                        Hello.Tests.Platforms.IOT01A
                        Hello.Tests.Platforms.Monstick
+                       Hello.Tests.Platforms.NucleoG474
                        Paths_ivory_tower_helloworld
                        Hello.Tests.CANSendRecv
                        Hello.Tests.CAN2UART
