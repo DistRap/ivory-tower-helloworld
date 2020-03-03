@@ -36,6 +36,11 @@ bluepill = Platform {
       , uartPinRx = pinA3
       }
   , platformCAN      = undef "CAN"
+  , platformI2C      = undef "I2C"
+  , platformI2CPins  = undef "I2CPins"
+  , platformIWDG     = iwdg
+  , platformEXTI     = exti
+  , platformRNG      = undef "RNG"
   }
 
 -- 72Mhz with 8Mhz external crystal

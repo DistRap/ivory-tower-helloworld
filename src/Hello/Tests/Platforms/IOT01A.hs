@@ -66,6 +66,9 @@ iot01a = Platform {
   , platformUART     = usart1
   , platformUARTPins = uartPins
   , platformCAN      = undef "CAN"
+  , platformIWDG     = iwdg
+  , platformEXTI     = exti
+  , platformRNG      = rng
   }
 
 -- max7219 display connected to PMOD connector

@@ -82,6 +82,9 @@ monstick = Platform {
   , platformUART     = usart2
   , platformUARTPins = usart2Pins
   , platformCAN      = monstickCAN
+  , platformIWDG     = iwdg
+  , platformEXTI     = exti
+  , platformRNG      = rng
   }
 
 monstickCAN = CANConfig {
