@@ -19,6 +19,7 @@ library
                        Hello.Tests.SimpleBlink
                        Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
+                       Hello.Tests.ADS
                        Hello.Tests.Monstick
                        Hello.Tests.Monstick.RN2483
                        Hello.Tests.Platforms
@@ -48,6 +49,14 @@ library
 
   default-language:    Haskell2010
   ghc-options:         -Wall
+
+executable ads-test-gen
+  main-is:             ADS.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+                     , ivory-bsp-stm32
+  ghc-options:          -Wall
 
 executable blink-test-gen
   main-is:             BlinkTest.hs

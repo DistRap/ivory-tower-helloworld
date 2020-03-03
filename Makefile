@@ -12,6 +12,7 @@ TESTS      := \
 	monstick-rn2483-test \
 	uart-test \
 	simpleblink-test \
+	ads-test \
 	blink-test
 
 CLEANS     := \
