@@ -9,38 +9,36 @@ import Ivory.BSP.STM32.ClockConfig
 import Ivory.BSP.STM32L431
 
 import Ivory.BSP.STM32.Peripheral.I2C
-
 import Ivory.BSP.STM32.Peripheral.SPI
-import Ivory.BSP.STM32.Peripheral.SPI.Pins
-
-import Ivory.BSP.STM32.Peripheral.UART.Pins
 import Ivory.BSP.STM32.Peripheral.UART
 
 import qualified Ivory.Tower.Base as Base
 
 
 -- external I2C1
+i2c1Pins :: I2CPins
 i2c1Pins = I2CPins { i2cpins_sda = pinB7
                    , i2cpins_scl = pinB8 }
 
 -- internal
+i2c2Pins :: I2CPins
 i2c2Pins = I2CPins { i2cpins_sda = pinB11
                    , i2cpins_scl = pinB13 }
 
 -- external I2C0
+i2c3Pins :: I2CPins
 i2c3Pins = I2CPins { i2cpins_sda = pinC1
                    , i2cpins_scl = pinC0 }
 
+spiPins :: SPIPins
 spiPins = SPIPins
     { spiPinMiso = pinB14
     , spiPinMosi = pinB15
     , spiPinSck  = pinB10
     }
 
--- CS0 -- pinB12
--- CS1 -- pinB9
-
 -- modem
+usart1Pins :: UARTPins
 usart1Pins = UARTPins
   { uartPinTx = pinA9
   , uartPinRx = pinA10
@@ -49,24 +47,28 @@ usart1Pins = UARTPins
   -- CTS pinB4
 
 -- debug
+usart2Pins :: UARTPins
 usart2Pins = UARTPins
   { uartPinTx = pinA2
   , uartPinRx = pinA15
   }
 
-monstick_cc = ClockConfig { clockconfig_source = MSI $ 16 * 1000 * 1000 -- HSI16
-                        , clockconfig_pll    = PLLFactorMNR
-                          { pll_mnr_m = 1
-                          , pll_mnr_n = 10
-                          , pll_mnr_p = 7
-                          , pll_mnr_q = 2
-                          , pll_mnr_r = 2
-                          }
-                        , clockconfig_hclk_divider = 1
-                        , clockconfig_pclk1_divider = 1
-                        , clockconfig_pclk2_divider = 1
-                        }
+monstick_cc :: ClockConfig
+monstick_cc = ClockConfig {
+    clockconfig_source = MSI $ 16 * 1000 * 1000
+  , clockconfig_pll    = PLLFactorMNR
+    { pll_mnr_m = 1
+    , pll_mnr_n = 10
+    , pll_mnr_p = 7
+    , pll_mnr_q = 2
+    , pll_mnr_r = 2
+    }
+  , clockconfig_hclk_divider = 1
+  , clockconfig_pclk1_divider = 1
+  , clockconfig_pclk2_divider = 1
+  }
 
+monstick :: Platform
 monstick = Platform {
     platformClocks   = monstick_cc
   , platformMCU      = Nothing
@@ -87,9 +89,21 @@ monstick = Platform {
   , platformRNG      = rng
   }
 
+monstickCAN :: CANConfig
 monstickCAN = CANConfig {
     canPeriph        = can1
   , canPeriphFilters = canFilters
   , canRxPin         = pinA11
   , canTxPin         = pinA12
   }
+
+{--
+ - SPI CS0 PB12
+ - SPI CS1 PB9
+ --}
+ --
+monstick_spi_cs0 :: GPIOPin
+monstick_spi_cs0 = pinB12
+
+monstick_spi_cs1 :: GPIOPin
+monstick_spi_cs1 = pinB9

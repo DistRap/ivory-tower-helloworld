@@ -2,21 +2,17 @@ module Hello.Tests.Platforms.Bluepill where
 
 import Hello.Tests.Platforms.Types
 
-import Ivory.BSP.STM32.Peripheral.GPIO
 import Ivory.BSP.STM32.ClockConfig
 
 import Ivory.BSP.STM32F103
 
 import Ivory.BSP.STM32.Peripheral.I2C
-
 import Ivory.BSP.STM32.Peripheral.SPI
-import Ivory.BSP.STM32.Peripheral.SPI.Pins
-
-import Ivory.BSP.STM32.Peripheral.UART.Pins
 import Ivory.BSP.STM32.Peripheral.UART
 
 import qualified Ivory.Tower.Base as Base
 
+bluepill :: Platform
 bluepill = Platform {
     platformClocks   = bluepill_cc
   , platformMCU      = Nothing
@@ -45,6 +41,7 @@ bluepill = Platform {
   }
 
 -- 72Mhz with 8Mhz external crystal
+bluepill_cc :: ClockConfig
 bluepill_cc = ClockConfig { clockconfig_source = HSE $ 8 * 1000 * 1000
                           , clockconfig_pll    = PLLFactorMulDiv
                             { pll_mul = 9

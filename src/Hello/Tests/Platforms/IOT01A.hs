@@ -11,32 +11,34 @@ import Ivory.BSP.STM32L475
 import Ivory.BSP.STM32.Peripheral.I2C
 
 import Ivory.BSP.STM32.Peripheral.SPI
-import Ivory.BSP.STM32.Peripheral.SPI.Pins
-
-import Ivory.BSP.STM32.Peripheral.UART.Pins
 import Ivory.BSP.STM32.Peripheral.UART
 
 import qualified Ivory.Tower.Base as Base
 
 
+i2c1Pins :: I2CPins
 i2c1Pins = I2CPins { i2cpins_sda = pinB9
                    , i2cpins_scl = pinB8 }
 
+i2c2Pins :: I2CPins
 i2c2Pins = I2CPins { i2cpins_sda = pinB11
                    , i2cpins_scl = pinB10 }
 
+spiPins :: SPIPins
 spiPins = SPIPins
     { spiPinMiso = pinD3
     , spiPinMosi = pinD4
     , spiPinSck  = pinD1
     }
 
+uartPins :: UARTPins
 uartPins = UARTPins
   { uartPinTx = pinB6
   , uartPinRx = pinB7
   }
 
-iot01a_cc = ClockConfig { clockconfig_source = MSI $ 16 * 1000 * 1000 -- HSI16
+iot01a_cc :: ClockConfig
+iot01a_cc = ClockConfig { clockconfig_source = MSI $ 16 * 1000 * 1000
                         , clockconfig_pll    = PLLFactorMNR
                           { pll_mnr_m = 1
                           , pll_mnr_n = 10
@@ -49,8 +51,10 @@ iot01a_cc = ClockConfig { clockconfig_source = MSI $ 16 * 1000 * 1000 -- HSI16
                         , clockconfig_pclk2_divider = 1
                         }
 
+pin :: GPIOPin
 pin = pinA5
 
+iot01a :: Platform
 iot01a = Platform {
     platformClocks   = iot01a_cc
   , platformMCU      = Nothing
@@ -72,6 +76,7 @@ iot01a = Platform {
   }
 
 -- max7219 display connected to PMOD connector
+iot01a_spidevs :: [ SPIDevice ]
 iot01a_spidevs = [ max7219dev spi2 pinD5 ]
 
 max7219dev :: SPI -> GPIOPin -> SPIDevice
@@ -85,5 +90,3 @@ max7219dev spi csPin =  SPIDevice
     , spiDevBitOrder      = MSBFirst
     , spiDevName          = "max7219"
     }
-
-
