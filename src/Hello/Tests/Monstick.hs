@@ -33,7 +33,7 @@ app tocc toPlatform = do
   (i2cTransmit, i2cReady) <- i2cTower tocc platformI2C platformI2CPins
 
   uartTowerDeps
-  (ostream, istream) <- bufferedUartTower tocc
+  (ostream, _istream) <- bufferedUartTower tocc
     platformUART platformUARTPins
     115200 (Proxy :: Proxy UARTBuffer)
 
