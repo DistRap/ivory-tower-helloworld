@@ -2,7 +2,6 @@
 module Hello.Tests.Platforms (
     platformParser
   , getPlatform
-  , platformParser
   , buildHelloApp
   , module Hello.Tests.Platforms.Bluepill
   , module Hello.Tests.Platforms.IOT01A
