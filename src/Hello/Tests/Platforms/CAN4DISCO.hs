@@ -16,21 +16,7 @@ import qualified Ivory.Tower.Base as Base
 
 
 c4d_cc :: ClockConfig
-c4d_cc = externalXtal 8 168
-{--
-  ClockConfig {
-    clockconfig_source = HSE $ 8 * 1000 * 1000
-  , clockconfig_pll    = PLLFactorMNP
-    { pll_mnr_m = 1
-    , pll_mnr_n = 10
-    , pll_mnr_p = 7
-    , pll_mnr_q = 2
-    }
-  , clockconfig_hclk_divider = 1
-  , clockconfig_pclk1_divider = 4
-  , clockconfig_pclk2_divider = 2
-  }
---}
+c4d_cc = externalXtalF4 8 168
 
 i2c2Pins :: I2CPins
 i2c2Pins = I2CPins {
@@ -54,8 +40,6 @@ spiPins = SPIPins
 spiCSPin :: GPIOPin
 spiCSPin = pinA15
 
-
-
 can4disco :: Platform
 can4disco = Platform {
     platformClocks   = c4d_cc
@@ -76,7 +60,6 @@ can4disco = Platform {
   , platformEXTI     = exti
   , platformRNG      = rng
   }
-
 
 c4dCAN1 :: CANConfig
 c4dCAN1 = CANConfig {
