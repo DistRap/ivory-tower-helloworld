@@ -20,6 +20,7 @@ library
                        Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
                        Hello.Tests.ADS
+                       Hello.Tests.EXTI
                        Hello.Tests.Monstick
                        Hello.Tests.Monstick.RN2483
                        Hello.Tests.Platforms
@@ -128,4 +129,12 @@ executable uart-test-gen
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable exti-test-gen
+  main-is:             EXTI.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+                     , ivory-bsp-stm32
   ghc-options:          -Wall

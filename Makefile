@@ -13,6 +13,7 @@ TESTS      := \
 	uart-test \
 	simpleblink-test \
 	ads-test \
+	exti-test \
 	blink-test
 
 CLEANS     := \
