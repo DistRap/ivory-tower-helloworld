@@ -88,6 +88,7 @@ nucleo_g474 = Platform {
   , platformMCU      = Nothing
   , platformMCUName  = "STM32G474RET6"
   , platformPin      = pinA5
+  , platformPinIn    = pinA0
   , platformRedLED   = Base.LED pinA5 Base.ActiveHigh
   , platformGreenLED = Base.LED pinA5 Base.ActiveHigh
   , platformSPI      = spi1

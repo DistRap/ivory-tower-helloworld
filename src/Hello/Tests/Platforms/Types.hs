@@ -19,6 +19,7 @@ data Platform = Platform {
   , platformMCUName  :: String
   , platformClocks   :: ClockConfig
   , platformPin      :: GPIOPin
+  , platformPinIn    :: GPIOPin
   , platformRedLED   :: LED
   , platformGreenLED :: LED
 

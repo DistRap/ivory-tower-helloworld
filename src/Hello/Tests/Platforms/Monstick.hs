@@ -74,6 +74,7 @@ monstick = Platform {
   , platformMCU      = Nothing
   , platformMCUName  = "STM32L431RBT6"
   , platformPin      = pinH0
+  , platformPinIn    = undef "platformPinIn"
   , platformRedLED   = Base.LED pinH0 Base.ActiveHigh -- green as well
   , platformGreenLED = Base.LED pinH1 Base.ActiveHigh
   , platformSPI      = spi2

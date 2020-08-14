@@ -46,6 +46,7 @@ can4disco = Platform {
   , platformMCU      = Nothing
   , platformMCUName  = "STM32F407VGT6"
   , platformPin      = pinD14
+  , platformPinIn    = pinC0
   , platformRedLED   = Base.LED pinD14 Base.ActiveHigh
   , platformGreenLED = Base.LED pinD15 Base.ActiveHigh
   , platformSPI      = spi1

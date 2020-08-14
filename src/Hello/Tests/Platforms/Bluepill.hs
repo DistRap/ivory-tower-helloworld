@@ -18,6 +18,7 @@ bluepill = Platform {
   , platformMCU      = Nothing
   , platformMCUName  = "STM32F103C8T6"
   , platformPin      = pinC13
+  , platformPinIn    = pinC14
   , platformRedLED   = Base.LED pinC13 Base.ActiveLow
   , platformGreenLED = undef "greenLED"
   , platformSPI      = spi1

@@ -60,6 +60,7 @@ iot01a = Platform {
   , platformMCU      = Nothing
   , platformMCUName  = "STM32L475VGT6"
   , platformPin      = pin
+  , platformPinIn    = pinC13
   , platformRedLED   = Base.LED pinB14 Base.ActiveHigh -- green as well
   , platformGreenLED = Base.LED pin Base.ActiveHigh
   , platformSPI      = spi2
