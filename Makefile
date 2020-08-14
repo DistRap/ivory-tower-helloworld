@@ -14,6 +14,7 @@ TESTS      := \
 	simpleblink-test \
 	ads-test \
 	exti-test \
+	shift595-test \
 	blink-test
 
 CLEANS     := \

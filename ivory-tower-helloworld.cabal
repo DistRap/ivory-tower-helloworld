@@ -30,6 +30,7 @@ library
                        Hello.Tests.Platforms.IOT01A
                        Hello.Tests.Platforms.Monstick
                        Hello.Tests.Platforms.NucleoG474
+                       Hello.Tests.Shift595
                        Paths_ivory_tower_helloworld
                        Hello.Tests.CANSendRecv
                        Hello.Tests.CAN2UART
@@ -136,5 +137,14 @@ executable exti-test-gen
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
+                     , ivory-bsp-stm32
+  ghc-options:          -Wall
+
+executable shift595-test-gen
+  main-is:             Shift595.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+                     , ivory-tower-drivers
                      , ivory-bsp-stm32
   ghc-options:          -Wall
