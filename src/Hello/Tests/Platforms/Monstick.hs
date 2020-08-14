@@ -98,11 +98,6 @@ monstickCAN = CANConfig {
   , canTxPin         = pinA12
   }
 
-{--
- - SPI CS0 PB12
- - SPI CS1 PB9
- --}
- --
 monstick_spi_cs0 :: GPIOPin
 monstick_spi_cs0 = pinB12
 
