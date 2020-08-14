@@ -3,6 +3,7 @@ module Hello.Tests.Platforms (
     platformParser
   , getPlatform
   , buildHelloApp
+  , buildWrappedApp
   , module Hello.Tests.Platforms.Bluepill
   , module Hello.Tests.Platforms.CAN4DISCO
   , module Hello.Tests.Platforms.IOT01A
@@ -68,6 +69,18 @@ buildHelloApp :: Platform
 buildHelloApp def twrapp = compileTowerSTM32FreeRTOS
   platformToConfig (getPlatform def) $ twrapp platformClocks id
 
+-- Wrapper which can be used to build applications
+-- using wrapped Platform by providing `unWrap` and `wrap`
+-- converting between your wrapper `a` and `Platform`
+buildWrappedApp :: (a -> Platform)
+                -> (Platform -> a)
+                -> a
+                -> ((a -> ClockConfig) -> (a -> a) -> Tower a ())
+                -> IO ()
+buildWrappedApp unWrap wrap def towerApp = compileTowerSTM32FreeRTOS
+  (platformToConfig . unWrap)
+  ((wrap <$>) . getPlatform (unWrap def))
+  (towerApp (platformClocks . unWrap) id)
 
 
 {-
