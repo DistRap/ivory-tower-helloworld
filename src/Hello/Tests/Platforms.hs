@@ -6,6 +6,7 @@ module Hello.Tests.Platforms (
   , buildWrappedApp
   , module Hello.Tests.Platforms.Bluepill
   , module Hello.Tests.Platforms.CAN4DISCO
+  , module Hello.Tests.Platforms.F0DISCO
   , module Hello.Tests.Platforms.IOT01A
   , module Hello.Tests.Platforms.Monstick
   , module Hello.Tests.Platforms.NucleoG474
@@ -15,6 +16,7 @@ module Hello.Tests.Platforms (
 import Hello.Tests.Platforms.Types
 import Hello.Tests.Platforms.Bluepill (bluepill)
 import Hello.Tests.Platforms.CAN4DISCO (can4disco)
+import Hello.Tests.Platforms.F0DISCO (f0disco)
 import Hello.Tests.Platforms.IOT01A   (iot01a)
 import Hello.Tests.Platforms.Monstick (monstick)
 import Hello.Tests.Platforms.NucleoG474 (nucleo_g474)
@@ -32,6 +34,7 @@ platformParser defPlatform = do
   case map toUpper p of
     "BLUEPILL"       -> return bluepill
     "CAN4DISCO"      -> return can4disco
+    "F0DISCO"        -> return f0disco
     "IOT01A"         -> return iot01a
     "MONSTICK"       -> return monstick
     "NUCLEO_G474"    -> return nucleo_g474
