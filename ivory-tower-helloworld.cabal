@@ -26,9 +26,9 @@ library
                        Hello.Tests.Platforms
                        Hello.Tests.Platforms.Types
                        Hello.Tests.Platforms.Bluepill
-                       Hello.Tests.Platforms.CAN4DISCO
                        Hello.Tests.Platforms.F0DISCO
                        Hello.Tests.Platforms.F3DISCO
+                       Hello.Tests.Platforms.F4DISCO
                        Hello.Tests.Platforms.IOT01A
                        Hello.Tests.Platforms.Monstick
                        Hello.Tests.Platforms.NucleoG474

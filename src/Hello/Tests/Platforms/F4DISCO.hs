@@ -1,5 +1,5 @@
 
-module Hello.Tests.Platforms.CAN4DISCO where
+module Hello.Tests.Platforms.F4DISCO where
 
 import Hello.Tests.Platforms.Types
 
@@ -15,8 +15,8 @@ import Ivory.BSP.STM32.Peripheral.UART
 import qualified Ivory.Tower.Base as Base
 
 
-c4d_cc :: ClockConfig
-c4d_cc = externalXtalF4 8 168
+f4disco_cc :: ClockConfig
+f4disco_cc = externalXtalF4 8 168
 
 i2c2Pins :: I2CPins
 i2c2Pins = I2CPins {
@@ -40,9 +40,9 @@ spiPins = SPIPins
 spiCSPin :: GPIOPin
 spiCSPin = pinA15
 
-can4disco :: Platform
-can4disco = Platform {
-    platformClocks   = c4d_cc
+f4disco :: Platform
+f4disco = Platform {
+    platformClocks   = f4disco_cc
   , platformMCU      = Nothing
   , platformMCUName  = "STM32F407VGT6"
   , platformPin      = pinD14
@@ -56,22 +56,22 @@ can4disco = Platform {
   , platformI2CPins  = i2c2Pins
   , platformUART     = usart2
   , platformUARTPins = usart2Pins
-  , platformCAN      = c4dCAN1
+  , platformCAN      = f4discoCAN1
   , platformIWDG     = iwdg
   , platformEXTI     = exti
   , platformRNG      = rng
   }
 
-c4dCAN1 :: CANConfig
-c4dCAN1 = CANConfig {
+f4discoCAN1 :: CANConfig
+f4discoCAN1 = CANConfig {
     canPeriph = can1
   , canPeriphFilters = canFilters
   , canRxPin = pinB8
   , canTxPin = pinB9
   }
 
-c4dCAN2 :: CANConfig
-c4dCAN2 = CANConfig {
+f4discoCAN2 :: CANConfig
+f4discoCAN2 = CANConfig {
     canPeriph = can2
   , canPeriphFilters = canFilters
   , canRxPin = pinB5
