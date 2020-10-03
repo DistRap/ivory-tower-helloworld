@@ -3,5 +3,5 @@ module Main where
 import Hello.Tests.Platforms
 import Hello.Tests.CANSendRecv (app)
 
-main = buildHelloApp iot01a app
+main = buildHelloApp f4disco app
 main :: IO ()
