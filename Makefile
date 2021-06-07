@@ -10,6 +10,7 @@ TESTS      := \
 	iot01a-test \
 	monstick-test \
 	monstick-rn2483-test \
+	nucleo-plc-test \
 	uart-test \
 	simpleblink-test \
 	ads-test \

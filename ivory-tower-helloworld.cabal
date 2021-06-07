@@ -23,6 +23,7 @@ library
                        Hello.Tests.EXTI
                        Hello.Tests.Monstick
                        Hello.Tests.Monstick.RN2483
+                       Hello.Tests.NucleoPLC
                        Hello.Tests.Platforms
                        Hello.Tests.Platforms.Types
                        Hello.Tests.Platforms.Bluepill
@@ -122,6 +123,13 @@ executable monstick-test-gen
 
 executable monstick-rn2483-test-gen
   main-is:             MonstickRN2483Test.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable nucleo-plc-test-gen
+  main-is:             NucleoPLC.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
