@@ -33,6 +33,7 @@ library
                        Hello.Tests.Platforms.IOT01A
                        Hello.Tests.Platforms.Monstick
                        Hello.Tests.Platforms.NucleoG474
+                       Hello.Tests.Platforms.NucleoF767
                        Hello.Tests.Shift595
                        Paths_ivory_tower_helloworld
                        Hello.Tests.CANSendRecv
