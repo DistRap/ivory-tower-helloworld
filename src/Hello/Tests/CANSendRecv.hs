@@ -38,9 +38,11 @@ app tocc toPlatform = do
                       []
         ledSetup $ platformRedLED
         ledOn    $ platformRedLED
+        ledSetup $ platformGreenLED
 
     tx_pending <- state "tx_pending"
     last_sent  <- state "last_sent"
+    last_received  <- state "last_received"
 
     handler periodic "periodic" $ do
       abort_emitter <- emitter (abortableAbort    req) 1
@@ -64,16 +66,29 @@ app tocc toPlatform = do
           emit req_emitter $ constRef last_sent
           store tx_pending true
 
+    sent <- stateInit "can_sent_count" (ival (0 :: Uint32))
     handler (abortableComplete req) "tx_complete" $ do
       req_emitter <- emitter (abortableTransmit req) 1
       callbackV $ \ ok -> do
-        ifte_ ok (store tx_pending false) $ do
-          emit req_emitter $ constRef last_sent
-          store tx_pending true
+        ifte_ ok
+          (do
+            store tx_pending false
+            count <- deref sent
+            store sent (count + 1)
+            ifte_ (count .& 1 ==? 0)
+              (ledOff platformGreenLED)
+              (ledOn platformGreenLED)
+          )
+          (do
+            emit req_emitter $ constRef last_sent
+            store tx_pending true
+          )
+
 
     received <- stateInit "can_received_count" (ival (0 :: Uint32))
     handler res "result" $ do
-      callback $ const $ do
+      callback $ \r -> do
+        refCopy last_received r
         count <- deref received
         store received (count + 1)
         ifte_ (count .& 1 ==? 0)
