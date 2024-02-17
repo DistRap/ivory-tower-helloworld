@@ -12,6 +12,7 @@ module Hello.Tests.Platforms (
   , module Hello.Tests.Platforms.Monstick
   , module Hello.Tests.Platforms.NucleoG474
   , module Hello.Tests.Platforms.NucleoF767
+  , module Hello.Tests.Platforms.Stamp
   , module Hello.Tests.Platforms.Types
   ) where
 
@@ -24,6 +25,7 @@ import Hello.Tests.Platforms.IOT01A   (iot01a)
 import Hello.Tests.Platforms.Monstick (monstick)
 import Hello.Tests.Platforms.NucleoG474 (nucleo_g474)
 import Hello.Tests.Platforms.NucleoF767 (nucleo_f767)
+import Hello.Tests.Platforms.Stamp (stamp)
 
 import Data.Char (toUpper)
 import Ivory.Tower
@@ -44,6 +46,7 @@ platformParser defPlatform = do
     "MONSTICK"       -> return monstick
     "NUCLEO_G474"    -> return nucleo_g474
     "NUCLEO_F767"    -> return nucleo_f767
+    "STAMP"          -> return stamp
     "DEFAULT"        -> return defPlatform
     _ -> fail ("no such platform " ++ p)
 
