@@ -101,6 +101,15 @@ executable can2uart-test-gen
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
+executable composed-test-gen
+  main-is:             ComposedTest.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+                     , ivory-bsp-stm32
+                     , tower
+  ghc-options:         -Wall
+
 executable dmauart-test-gen
   main-is:             DMAUARTTest.hs
   hs-source-dirs:      test
