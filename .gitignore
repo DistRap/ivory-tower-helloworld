@@ -1,4 +1,5 @@
+attic
 build
-.stack-work
+.history
 .gdb_history
 .ghc.environment*
