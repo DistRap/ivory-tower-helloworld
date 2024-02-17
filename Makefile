@@ -15,6 +15,7 @@ TESTS      := \
 	nucleo-plc-test \
 	pcf8591-test \
 	uart-test \
+	uart-bridge-test \
 	uart-to-max7219-test \
 	simpleblink-test \
 	ads-test \

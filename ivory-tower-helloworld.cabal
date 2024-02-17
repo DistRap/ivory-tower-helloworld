@@ -41,6 +41,7 @@ library
                        Hello.Tests.CAN2UART
                        Hello.Tests.DMAUART
                        Hello.Tests.UART
+                       Hello.Tests.UARTBridge
                        Hello.Tests.UARTToMAX7219
 
   build-depends:       base
@@ -165,6 +166,13 @@ executable pcf8591-test-gen
 
 executable uart-test-gen
   main-is:             UARTTest.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+  ghc-options:         -Wall
+
+executable uart-bridge-test-gen
+  main-is:             UARTBridgeTest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
