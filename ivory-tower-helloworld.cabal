@@ -69,14 +69,14 @@ executable ads-test-gen
   ghc-options:         -Wall
 
 executable blink-test-gen
-  main-is:             BlinkTest.hs
+  main-is:             Blink.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable bluepill-test-gen
-  main-is:             BluepillTest.hs
+  main-is:             Bluepill.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-bsp-stm32
@@ -84,7 +84,7 @@ executable bluepill-test-gen
   ghc-options:         -Wall
 
 executable simpleblink-test-gen
-  main-is:             SimpleBlinkTest.hs
+  main-is:             SimpleBlink.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
@@ -92,21 +92,21 @@ executable simpleblink-test-gen
 
 
 executable cansendrecv-test-gen
-  main-is:             CANSendRecvTest.hs
+  main-is:             CANSendRecv.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable can2uart-test-gen
-  main-is:             CAN2UARTTest.hs
+  main-is:             CAN2UART.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable composed-test-gen
-  main-is:             ComposedTest.hs
+  main-is:             Composed.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
@@ -115,35 +115,35 @@ executable composed-test-gen
   ghc-options:         -Wall
 
 executable dmauart-test-gen
-  main-is:             DMAUARTTest.hs
+  main-is:             DMAUART.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable i2c-whoami-test-gen
-  main-is:             I2CWhoAmITest.hs
+  main-is:             I2CWhoAmI.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable iot01a-test-gen
-  main-is:             IOT01ATest.hs
+  main-is:             IOT01A.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:          -Wall
 
 executable monstick-test-gen
-  main-is:             MonstickTest.hs
+  main-is:             Monstick.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable monstick-rn2483-test-gen
-  main-is:             MonstickRN2483Test.hs
+  main-is:             MonstickRN2483.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
@@ -157,7 +157,7 @@ executable nucleo-plc-test-gen
   ghc-options:         -Wall
 
 executable pcf8591-test-gen
-  main-is:             PCF8591Test.hs
+  main-is:             PCF8591.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
@@ -165,14 +165,14 @@ executable pcf8591-test-gen
   ghc-options:         -Wall
 
 executable uart-test-gen
-  main-is:             UARTTest.hs
+  main-is:             UART.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable uart-bridge-test-gen
-  main-is:             UARTBridgeTest.hs
+  main-is:             UARTBridge.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
