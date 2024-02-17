@@ -12,6 +12,7 @@ TESTS      := \
 	monstick-test \
 	monstick-rn2483-test \
 	nucleo-plc-test \
+	pcf8591-test \
 	uart-test \
 	simpleblink-test \
 	ads-test \
