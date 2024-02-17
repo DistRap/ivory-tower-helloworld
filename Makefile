@@ -3,26 +3,26 @@ IVORYFLAGS ?= --const-fold --verbose
 #IVORYFLAGS ?=
 APPS       :=
 TESTS      := \
+	ads-test \
+	as5047-test \
+	blink-test \
 	bluepill-test \
-	cansendrecv-test \
 	can2uart-test \
+	cansendrecv-test \
 	composed-test \
 	dmauart-test \
+	exti-test \
 	i2c-whoami-test \
 	iot01a-test \
 	monstick-test \
 	monstick-rn2483-test \
 	nucleo-plc-test \
 	pcf8591-test \
+	shift595-test \
+	simpleblink-test \
 	uart-test \
 	uart-bridge-test \
-	uart-to-max7219-test \
-	simpleblink-test \
-	ads-test \
-	as5047-test \
-	exti-test \
-	shift595-test \
-	blink-test
+	uart-to-max7219-test
 
 CLEANS     := \
 	$(foreach test,$(TESTS),$(test)-clean) \
