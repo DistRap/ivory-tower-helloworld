@@ -40,6 +40,7 @@ library
                        Hello.Tests.CAN2UART
                        Hello.Tests.DMAUART
                        Hello.Tests.UART
+                       Hello.Tests.UARTToMAX7219
 
   build-depends:       base
                      , monadLib
@@ -178,6 +179,15 @@ executable exti-test-gen
 
 executable shift595-test-gen
   main-is:             Shift595.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+                     , ivory-tower-drivers
+                     , ivory-bsp-stm32
+  ghc-options:         -Wall
+
+executable uart-to-max7219-test-gen
+  main-is:             UARTToMAX7219.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
