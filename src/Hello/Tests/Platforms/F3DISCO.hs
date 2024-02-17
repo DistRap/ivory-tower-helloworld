@@ -8,7 +8,6 @@ import Ivory.BSP.STM32.Peripheral.GPIO
 import Ivory.BSP.STM32.ClockConfig
 
 import Ivory.BSP.STM32F303
-import Ivory.BSP.STM32F303.Clock
 
 import Ivory.BSP.STM32.Peripheral.I2C
 import Ivory.BSP.STM32.Peripheral.SPI

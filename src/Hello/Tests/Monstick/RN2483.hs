@@ -7,8 +7,6 @@
 
 module Hello.Tests.Monstick.RN2483 where
 
-import Data.Char (ord)
-
 import Ivory.Language
 import Ivory.Stdlib
 import Ivory.Tower
@@ -23,10 +21,10 @@ import Ivory.BSP.STM32L431 (usart1, pinC12)
 import Hello.Tests.Platforms
 import qualified Hello.Tests.Platforms.Monstick as Monstick
 
-import Ivory.Tower.Base hiding (putc, puts)
+import Ivory.Tower.Base.LED
 import Ivory.Tower.Base.UART
 import Ivory.Tower.Base.UART.Types
-import Ivory.Tower.Base.Util
+import Ivory.Tower.Base.Util (dropEvery, mergeInputs)
 
 import Ivory.Tower.Drivers.Net.RN2483
 

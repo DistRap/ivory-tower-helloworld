@@ -6,7 +6,6 @@ import Ivory.BSP.STM32.ClockConfig
 
 import Ivory.BSP.STM32F103
 
-import Ivory.BSP.STM32.Peripheral.I2C
 import Ivory.BSP.STM32.Peripheral.SPI
 import Ivory.BSP.STM32.Peripheral.UART
 
