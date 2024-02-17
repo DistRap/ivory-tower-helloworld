@@ -15,6 +15,7 @@ library
                        Hello.Tests.Blink
                        Hello.Tests.Bluepill
                        Hello.Tests.SimpleBlink
+                       Hello.Tests.AS5047
                        Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
                        Hello.Tests.ADS
@@ -184,6 +185,14 @@ executable shift595-test-gen
                      , ivory-tower-helloworld
                      , ivory-tower-drivers
                      , ivory-bsp-stm32
+  ghc-options:         -Wall
+
+executable as5047-test-gen
+  main-is:             AS5047.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+                     , ivory-tower-drivers
   ghc-options:         -Wall
 
 executable uart-to-max7219-test-gen

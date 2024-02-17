@@ -18,6 +18,7 @@ TESTS      := \
 	uart-to-max7219-test \
 	simpleblink-test \
 	ads-test \
+	as5047-test \
 	exti-test \
 	shift595-test \
 	blink-test
