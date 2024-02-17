@@ -1,15 +1,13 @@
-
+cabal-version:       2.2
 name:                ivory-tower-helloworld
 version:             0.1.0.0
 synopsis:            Collection of example applications for Ivory Tower and STM32
--- description:
-license:             BSD3
-author:              Richard Marko
+license:             BSD-3-Clause
+author:              Sorki
 maintainer:          srk@48.io
 copyright:           2020 Richard Marko
 category:            Embedded
 build-type:          Simple
-cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
@@ -63,14 +61,14 @@ executable ads-test-gen
   build-depends:       base
                      , ivory-tower-helloworld
                      , ivory-bsp-stm32
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable blink-test-gen
   main-is:             BlinkTest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable bluepill-test-gen
   main-is:             BluepillTest.hs
@@ -78,14 +76,14 @@ executable bluepill-test-gen
   build-depends:       base
                      , ivory-bsp-stm32
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable simpleblink-test-gen
   main-is:             SimpleBlinkTest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 
 executable cansendrecv-test-gen
@@ -93,28 +91,28 @@ executable cansendrecv-test-gen
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable can2uart-test-gen
   main-is:             CAN2UARTTest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable dmauart-test-gen
   main-is:             DMAUARTTest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable i2c-whoami-test-gen
   main-is:             I2CWhoAmITest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable iot01a-test-gen
   main-is:             IOT01ATest.hs
@@ -128,28 +126,28 @@ executable monstick-test-gen
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable monstick-rn2483-test-gen
   main-is:             MonstickRN2483Test.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable nucleo-plc-test-gen
   main-is:             NucleoPLC.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable uart-test-gen
   main-is:             UARTTest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable exti-test-gen
   main-is:             EXTI.hs
@@ -157,7 +155,7 @@ executable exti-test-gen
   build-depends:       base
                      , ivory-tower-helloworld
                      , ivory-bsp-stm32
-  ghc-options:          -Wall
+  ghc-options:         -Wall
 
 executable shift595-test-gen
   main-is:             Shift595.hs
@@ -166,4 +164,4 @@ executable shift595-test-gen
                      , ivory-tower-helloworld
                      , ivory-tower-drivers
                      , ivory-bsp-stm32
-  ghc-options:          -Wall
+  ghc-options:         -Wall
