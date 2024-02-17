@@ -12,14 +12,16 @@ build-type:          Simple
 library
   hs-source-dirs:      src
   exposed-modules:
+                       Hello.Tests.ADS
+                       Hello.Tests.AS5047
                        Hello.Tests.Blink
                        Hello.Tests.Bluepill
-                       Hello.Tests.SimpleBlink
-                       Hello.Tests.AS5047
+                       Hello.Tests.CAN2UART
+                       Hello.Tests.CANSendRecv
+                       Hello.Tests.DMAUART
+                       Hello.Tests.EXTI
                        Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
-                       Hello.Tests.ADS
-                       Hello.Tests.EXTI
                        Hello.Tests.Monstick
                        Hello.Tests.Monstick.RN2483
                        Hello.Tests.NucleoPLC
@@ -35,37 +37,41 @@ library
                        Hello.Tests.Platforms.NucleoG474
                        Hello.Tests.Platforms.NucleoF767
                        Hello.Tests.Platforms.Stamp
+                       Hello.Tests.SimpleBlink
                        Hello.Tests.Shift595
-                       Paths_ivory_tower_helloworld
-                       Hello.Tests.CANSendRecv
-                       Hello.Tests.CAN2UART
-                       Hello.Tests.DMAUART
                        Hello.Tests.UART
                        Hello.Tests.UARTBridge
                        Hello.Tests.UARTToMAX7219
 
   build-depends:       base
-                     , monadLib
                      , ivory
-                     , ivory-stdlib
+                     , ivory-bsp-stm32
                      , ivory-hw
+                     , ivory-stdlib
+                     , ivory-tower-base
+                     , ivory-tower-drivers
                      , tower
                      , tower-config
                      , tower-hal
                      , tower-freertos-stm32
-                     , ivory-bsp-stm32
-                     , ivory-tower-base
-                     , ivory-tower-drivers
 
   default-language:    Haskell2010
-  ghc-options:         -Wall
+  ghc-options:         -Wall -Wunused-packages
 
 executable ads-test-gen
   main-is:             ADS.hs
   hs-source-dirs:      test
   build-depends:       base
-                     , ivory-tower-helloworld
                      , ivory-bsp-stm32
+                     , ivory-tower-helloworld
+  ghc-options:         -Wall
+
+executable as5047-test-gen
+  main-is:             AS5047.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-drivers
+                     , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable blink-test-gen
@@ -83,23 +89,15 @@ executable bluepill-test-gen
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
-executable simpleblink-test-gen
-  main-is:             SimpleBlink.hs
+executable can2uart-test-gen
+  main-is:             CAN2UART.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
   ghc-options:         -Wall
-
 
 executable cansendrecv-test-gen
   main-is:             CANSendRecv.hs
-  hs-source-dirs:      test
-  build-depends:       base
-                     , ivory-tower-helloworld
-  ghc-options:         -Wall
-
-executable can2uart-test-gen
-  main-is:             CAN2UART.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld
@@ -109,8 +107,8 @@ executable composed-test-gen
   main-is:             Composed.hs
   hs-source-dirs:      test
   build-depends:       base
-                     , ivory-tower-helloworld
                      , ivory-bsp-stm32
+                     , ivory-tower-helloworld
                      , tower
   ghc-options:         -Wall
 
@@ -118,6 +116,14 @@ executable dmauart-test-gen
   main-is:             DMAUART.hs
   hs-source-dirs:      test
   build-depends:       base
+                     , ivory-tower-helloworld
+  ghc-options:         -Wall
+
+executable exti-test-gen
+  main-is:             EXTI.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-bsp-stm32
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
@@ -160,8 +166,24 @@ executable pcf8591-test-gen
   main-is:             PCF8591.hs
   hs-source-dirs:      test
   build-depends:       base
-                     , ivory-tower-helloworld
                      , ivory-bsp-stm32
+                     , ivory-tower-helloworld
+  ghc-options:         -Wall
+
+executable shift595-test-gen
+  main-is:             Shift595.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-bsp-stm32
+                     , ivory-tower-drivers
+                     , ivory-tower-helloworld
+  ghc-options:         -Wall
+
+executable simpleblink-test-gen
+  main-is:             SimpleBlink.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
   ghc-options:         -Wall
 
 executable uart-test-gen
@@ -178,36 +200,11 @@ executable uart-bridge-test-gen
                      , ivory-tower-helloworld
   ghc-options:         -Wall
 
-executable exti-test-gen
-  main-is:             EXTI.hs
-  hs-source-dirs:      test
-  build-depends:       base
-                     , ivory-tower-helloworld
-                     , ivory-bsp-stm32
-  ghc-options:         -Wall
-
-executable shift595-test-gen
-  main-is:             Shift595.hs
-  hs-source-dirs:      test
-  build-depends:       base
-                     , ivory-tower-helloworld
-                     , ivory-tower-drivers
-                     , ivory-bsp-stm32
-  ghc-options:         -Wall
-
-executable as5047-test-gen
-  main-is:             AS5047.hs
-  hs-source-dirs:      test
-  build-depends:       base
-                     , ivory-tower-helloworld
-                     , ivory-tower-drivers
-  ghc-options:         -Wall
-
 executable uart-to-max7219-test-gen
   main-is:             UARTToMAX7219.hs
   hs-source-dirs:      test
   build-depends:       base
-                     , ivory-tower-helloworld
-                     , ivory-tower-drivers
                      , ivory-bsp-stm32
+                     , ivory-tower-drivers
+                     , ivory-tower-helloworld
   ghc-options:         -Wall
