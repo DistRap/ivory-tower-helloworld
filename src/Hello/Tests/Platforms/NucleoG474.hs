@@ -101,6 +101,7 @@ nucleo_g474 = Platform {
   , platformI2CPins  = i2c1Pins
   , platformUART     = lpuart1
   , platformUARTPins = lpuart1Pins
+  , platformDMAUART  = undef "DMAUART"
   , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
   , platformEXTI     = exti

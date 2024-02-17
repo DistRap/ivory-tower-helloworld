@@ -6,6 +6,7 @@ TESTS      := \
 	bluepill-test \
 	cansendrecv-test \
 	can2uart-test \
+	dmauart-test \
 	i2c-whoami-test \
 	iot01a-test \
 	monstick-test \

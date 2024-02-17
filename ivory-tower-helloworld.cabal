@@ -38,6 +38,7 @@ library
                        Paths_ivory_tower_helloworld
                        Hello.Tests.CANSendRecv
                        Hello.Tests.CAN2UART
+                       Hello.Tests.DMAUART
                        Hello.Tests.UART
 
   build-depends:       base
@@ -96,6 +97,13 @@ executable cansendrecv-test-gen
 
 executable can2uart-test-gen
   main-is:             CAN2UARTTest.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-tower-helloworld
+  ghc-options:          -Wall
+
+executable dmauart-test-gen
+  main-is:             DMAUARTTest.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-tower-helloworld

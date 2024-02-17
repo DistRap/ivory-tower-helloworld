@@ -70,6 +70,7 @@ iot01a = Platform {
   , platformI2CPins  = i2c2Pins
   , platformUART     = usart1
   , platformUARTPins = uartPins
+  , platformDMAUART  = undef "DMAUART"
   , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
   , platformEXTI     = exti

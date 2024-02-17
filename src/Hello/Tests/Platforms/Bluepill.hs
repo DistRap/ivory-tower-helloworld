@@ -33,6 +33,7 @@ bluepill = Platform {
       { uartPinTx = pinA2
       , uartPinRx = pinA3
       }
+  , platformDMAUART  = undef "DMAUART"
   , platformCAN      = undef "CAN"
   , platformI2C      = undef "I2C"
   , platformI2CPins  = undef "I2CPins"

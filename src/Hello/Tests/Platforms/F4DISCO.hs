@@ -56,6 +56,7 @@ f4disco = Platform {
   , platformI2CPins  = i2c2Pins
   , platformUART     = usart2
   , platformUARTPins = usart2Pins
+  , platformDMAUART  = dmausart2
   , platformCAN      = f4discoCAN1
   , platformIWDG     = iwdg
   , platformEXTI     = exti

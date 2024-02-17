@@ -13,6 +13,7 @@ import Ivory.BSP.STM32.Peripheral.IWDG
 import Ivory.BSP.STM32.Peripheral.RNG
 import Ivory.BSP.STM32.Peripheral.SPI
 import Ivory.BSP.STM32.Peripheral.UART
+import Ivory.BSP.STM32.Peripheral.UART.DMA
 
 data Platform = Platform {
     platformMCU      :: Maybe NamedMCU
@@ -39,6 +40,7 @@ data Platform = Platform {
   , platformUART     :: UART
   , platformUARTPins :: UARTPins
 
+  , platformDMAUART  :: DMAUART
   }
 
 undef :: String -> a

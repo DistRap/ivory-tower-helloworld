@@ -78,8 +78,9 @@ f3disco = Platform {
   , platformI2CPins  = i2c1Pins
   , platformUART     = usart1
   , platformUARTPins = usart1Pins
-  , platformCAN      = undef "can"
+  , platformDMAUART  = undef "DMAUART"
+  , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
   , platformEXTI     = exti
-  , platformRNG      = undef "rng"
+  , platformRNG      = undef "RNG"
   }

@@ -84,6 +84,7 @@ monstick = Platform {
   , platformI2CPins  = i2c2Pins
   , platformUART     = usart2
   , platformUARTPins = usart2Pins
+  , platformDMAUART  = undef "DMAUART"
   , platformCAN      = monstickCAN
   , platformIWDG     = iwdg
   , platformEXTI     = exti
