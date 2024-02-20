@@ -8,9 +8,7 @@ module Hello.Tests.Bluepill where
 import Ivory.Language
 import Ivory.Stdlib
 import Ivory.Tower
-import Ivory.HW.Module
 
-import Ivory.BSP.STM32.Peripheral.GPIO
 import Ivory.BSP.STM32.Driver.SPI
 import Ivory.BSP.STM32.ClockConfig (ClockConfig)
 
