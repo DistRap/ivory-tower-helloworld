@@ -116,7 +116,7 @@ stampCAN1 = CANConfig {
 stampCAN3 :: CANConfig
 stampCAN3 = CANConfig {
     canPeriph = can3
-  , canPeriphFilters = canFilters
+  , canPeriphFilters = can3Filters
   , canRxPin = pinA8
   , canTxPin = pinA15
   }
