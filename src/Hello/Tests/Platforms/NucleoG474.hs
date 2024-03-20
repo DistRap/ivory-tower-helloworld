@@ -77,8 +77,6 @@ spiPins = SPIPins
 spiCSPin :: GPIOPin
 spiCSPin = pinB6
 
--- blue_button PC13
-
 -- Warning: pinA5 (User LED) is shared with SPI clock when
 -- used via duino header, don't accidentaly use LED or platformPin with SPI
 
@@ -88,7 +86,8 @@ nucleo_g474 = Platform {
   , platformMCU      = Nothing
   , platformMCUName  = "STM32G474RET6"
   , platformPin      = pinA5
-  , platformPinIn    = pinA0
+  , platformPinIn    = pinC13 -- blue button
+  -- only green led available, shared with SPI SCK
   , platformRedLED   = Base.LED pinA5 Base.ActiveHigh
   , platformGreenLED = Base.LED pinA5 Base.ActiveHigh
   , platformSPI      = spi1
