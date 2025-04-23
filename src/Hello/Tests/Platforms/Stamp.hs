@@ -140,6 +140,7 @@ stamp = Platform {
   , platformDMAUART  = dmausart1
   , platformCAN      = stampCAN3
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = rng
   }

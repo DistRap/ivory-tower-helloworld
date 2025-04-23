@@ -9,6 +9,7 @@ import Ivory.BSP.STM32.ClockConfig
 import Ivory.BSP.STM32F767
 import Ivory.BSP.STM32F767.Clock
 
+import Ivory.BSP.STM32.Peripheral.ETH
 import Ivory.BSP.STM32.Peripheral.I2C
 import Ivory.BSP.STM32.Peripheral.SPI
 import Ivory.BSP.STM32.Peripheral.UART
@@ -75,6 +76,25 @@ spiPins = SPIPins
 spiCSPin :: GPIOPin
 spiCSPin = pinD14
 
+ethPins :: ETHPins
+ethPins = ETHPins
+  { ethPins_mdc    = pinC1
+  , ethPins_mdio   = pinA2
+  , ethPins_refclk = pinA1
+  , ethPins_crs    = pinA7
+  , ethPins_txen   = pinG11
+  , ethPins_txd0   = pinG13
+  , ethPins_txd1   = pinB13
+  , ethPins_rxd0   = pinC4
+  , ethPins_rxd1   = pinC5
+  }
+
+ethConfig :: ETHConfig
+ethConfig = ETHConfig
+  { ethConfigPeriph = eth
+  , ethConfigPins   = ethPins
+  }
+
 nucleo_f767 :: Platform
 nucleo_f767 = Platform {
     platformClocks   = nucleo_f767_hsi_cc
@@ -94,6 +114,7 @@ nucleo_f767 = Platform {
   , platformDMAUART  = dmausart3
   , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
+  , platformETH      = ethConfig
   , platformEXTI     = exti
   , platformRNG      = rng
   }

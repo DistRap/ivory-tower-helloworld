@@ -73,6 +73,7 @@ iot01a = Platform {
   , platformDMAUART  = undef "DMAUART"
   , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = rng
   }

@@ -11,6 +11,7 @@ TESTS      := \
 	cansendrecv-test \
 	composed-test \
 	dmauart-test \
+	eth-arpreq-test \
 	exti-test \
 	i2c-whoami-test \
 	iot01a-test \

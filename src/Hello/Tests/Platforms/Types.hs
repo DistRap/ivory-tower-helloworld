@@ -7,6 +7,7 @@ import Ivory.BSP.STM32.ClockConfig
 import Ivory.BSP.STM32.MCU
 import Ivory.BSP.STM32.Peripheral.CAN
 import Ivory.BSP.STM32.Peripheral.EXTI
+import Ivory.BSP.STM32.Peripheral.ETH
 import Ivory.BSP.STM32.Peripheral.GPIO
 import Ivory.BSP.STM32.Peripheral.I2C
 import Ivory.BSP.STM32.Peripheral.IWDG
@@ -27,6 +28,7 @@ data Platform = Platform {
   -- peripherals
   , platformCAN      :: CANConfig
   , platformEXTI     :: EXTI
+  , platformETH      :: ETHConfig
   , platformIWDG     :: IWDG
   , platformRNG      :: RNG
 

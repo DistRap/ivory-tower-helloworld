@@ -19,6 +19,7 @@ library
                        Hello.Tests.CAN2UART
                        Hello.Tests.CANSendRecv
                        Hello.Tests.DMAUART
+                       Hello.Tests.ETHArpReq
                        Hello.Tests.EXTI
                        Hello.Tests.I2CWhoAmI
                        Hello.Tests.IOT01A
@@ -122,6 +123,14 @@ executable dmauart-test-gen
 
 executable exti-test-gen
   main-is:             EXTI.hs
+  hs-source-dirs:      test
+  build-depends:       base
+                     , ivory-bsp-stm32
+                     , ivory-tower-helloworld
+  ghc-options:         -Wall
+
+executable eth-arpreq-test-gen
+  main-is:             ETHArpReq.hs
   hs-source-dirs:      test
   build-depends:       base
                      , ivory-bsp-stm32

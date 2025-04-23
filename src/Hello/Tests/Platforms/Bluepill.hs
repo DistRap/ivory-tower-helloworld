@@ -37,6 +37,7 @@ bluepill = Platform {
   , platformI2C      = undef "I2C"
   , platformI2CPins  = undef "I2CPins"
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = undef "RNG"
   }

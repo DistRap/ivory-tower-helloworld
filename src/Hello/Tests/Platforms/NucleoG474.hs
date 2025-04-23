@@ -103,6 +103,7 @@ nucleo_g474 = Platform {
   , platformDMAUART  = undef "DMAUART"
   , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = rng
   }

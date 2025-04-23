@@ -87,6 +87,7 @@ monstick = Platform {
   , platformDMAUART  = undef "DMAUART"
   , platformCAN      = monstickCAN
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = rng
   }

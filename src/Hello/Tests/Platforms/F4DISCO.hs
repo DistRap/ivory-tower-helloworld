@@ -59,6 +59,7 @@ f4disco = Platform {
   , platformDMAUART  = dmausart2
   , platformCAN      = f4discoCAN1
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = rng
   }

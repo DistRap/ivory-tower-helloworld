@@ -80,6 +80,7 @@ f3disco = Platform {
   , platformDMAUART  = undef "DMAUART"
   , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = undef "RNG"
   }

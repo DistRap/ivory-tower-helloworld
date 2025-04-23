@@ -99,6 +99,7 @@ nucleo_f411 = Platform {
   , platformDMAUART  = dmausart2
   , platformCAN      = undef "CAN"
   , platformIWDG     = iwdg
+  , platformETH      = undef "ETH"
   , platformEXTI     = exti
   , platformRNG      = undef "RNG"
   }
