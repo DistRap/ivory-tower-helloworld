@@ -18,7 +18,6 @@ import Ivory.BSP.STM32.ClockConfig
 import Ivory.Tower.Base (blink, fwd, ledToggle)
 
 import Ivory.BSP.STM32.Driver.ETH
-import Ivory.BSP.STM32.Driver.ETH.FrameBuffer
 
 app :: (e -> ClockConfig) -> (e -> Platform) -> Tower e ()
 app tocc toPlatform = do
@@ -26,13 +25,10 @@ app tocc toPlatform = do
 
   blink (Milliseconds 1000) [platformRedLED]
 
-  ethTowerDeps
-
   (ready, BackpressureTransmit txReq _txDone, rxDone) <-
     ethTower
       tocc
       platformETH
-      (Proxy @FrameBuffer)
 
   togIn <- ledToggle [platformGreenLED]
   fwd ready togIn
