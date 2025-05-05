@@ -26,6 +26,7 @@ import Hello.Tests.Platforms.IOT01A   (iot01a)
 import Hello.Tests.Platforms.Monstick (monstick)
 import Hello.Tests.Platforms.NucleoG474 (nucleo_g474)
 import Hello.Tests.Platforms.NucleoF411 (nucleo_f411)
+import Hello.Tests.Platforms.NucleoF722 (nucleo_f722)
 import Hello.Tests.Platforms.NucleoF767 (nucleo_f767)
 import Hello.Tests.Platforms.Stamp (stamp)
 
@@ -48,6 +49,7 @@ platformParser defPlatform = do
     "MONSTICK"       -> return monstick
     "NUCLEO_G474"    -> return nucleo_g474
     "NUCLEO_F411"    -> return nucleo_f411
+    "NUCLEO_F722"    -> return nucleo_f722
     "NUCLEO_F767"    -> return nucleo_f767
     "STAMP"          -> return stamp
     "DEFAULT"        -> return defPlatform

@@ -37,6 +37,7 @@ library
                        Hello.Tests.Platforms.Monstick
                        Hello.Tests.Platforms.NucleoG474
                        Hello.Tests.Platforms.NucleoF411
+                       Hello.Tests.Platforms.NucleoF722
                        Hello.Tests.Platforms.NucleoF767
                        Hello.Tests.Platforms.Stamp
                        Hello.Tests.SimpleBlink
