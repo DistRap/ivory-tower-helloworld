@@ -53,6 +53,12 @@ i2c1Pins = I2CPins {
   , i2cpins_scl = pinB8
   }
 
+i2c2Pins :: I2CPins
+i2c2Pins = I2CPins {
+    i2cpins_sda = pinB11
+  , i2cpins_scl = pinB10
+  }
+
 -- part of devboard debug connector
 usart1Pins :: UARTPins
 usart1Pins = UARTPins
