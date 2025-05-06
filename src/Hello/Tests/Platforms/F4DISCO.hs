@@ -24,6 +24,17 @@ i2c2Pins = I2CPins {
   , i2cpins_scl = pinB10
   }
 
+-- Audio DAC I2C periph
+i2cAudio :: I2C
+i2cAudio = i2c1
+
+-- Audio DAC I2C1 pins
+i2cPinsAudio :: I2CPins
+i2cPinsAudio = I2CPins {
+    i2cpins_sda = pinB9
+  , i2cpins_scl = pinB6
+  }
+
 usart2Pins :: UARTPins
 usart2Pins = UARTPins
   { uartPinTx = pinA2
